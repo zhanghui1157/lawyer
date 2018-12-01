@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title></title>
+        <meta name="keywords" content="">
+        <meta name="description" content="">
+        <link href="__PUBLIC__/hplus/css/bootstrap.min.css?v={:C('SYSTEM_VER')}" rel="stylesheet">
+        <link href="__PUBLIC__/hplus/css/font-awesome.min.css?v={:C('SYSTEM_VER')}" rel="stylesheet">
+        <link href="__PUBLIC__/hplus/css/animate.min.css?v={:C('SYSTEM_VER')}" rel="stylesheet">
+        <link href="__PUBLIC__/hplus/css/style.min.css?v={:C('SYSTEM_VER')}" rel="stylesheet"> 
+        <link href="__PUBLIC__/hplus/css/osdefine.css?v={:C('SYSTEM_VER')}" rel="stylesheet">
+        <link href="__PUBLIC__/hplus/css/blueimp-gallery.min.css?v={:C('SYSTEM_VER')}" rel="stylesheet">
+        <link href="__PUBLIC__/hplus/js/icheck/custom.css" rel="stylesheet">
+
+        <link href="__PUBLIC__/hplus/css/jquery-ui.min6666.css" rel="stylesheet" type="text/css" media="all"/>
+        <link href="__PUBLIC__/hplus/css/map.css" rel="stylesheet" type="text/css" media="all"/>
+        
+
+        <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=FXvXjyGShvZEUke1Y1uhYEw2W7UMTZgA"></script>
+        <style>
+        .lightBoxGallery img {
+            margin: 5px;
+            width: 160px;
+        }
+        fieldset{padding:.35em .625em .75em;margin:0 2px;border:1px solid silver; border-radius: 5px; }
+        legend{padding:.5em;border:0;width:auto; font-size: 12px; margin-bottom: 0;}
+        </style>
+    </head>
+    <body class="gray-bg">
+    <OBJECT ID="FPSLID1" WIDTH="0" HEIGHT="0"
+     CLASSID="CLSID:AEC85E68-EC97-4656-AE30-CFBB0B8DBA75">
+        <PARAM NAME="_ExtentX" VALUE="5133">
+        <PARAM NAME="_ExtentY" VALUE="5715">
+    </OBJECT>
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <form method="post" id='submitForm' name='submitForm' class="form-horizontal">
+                       <input type="hidden" name="id" id="id" value="{$entity.id}"/>
+                      <div class="tabs-container">
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true">基本信息</a></li>
+                                <li ><a data-toggle="tab" href="#tab-2" aria-expanded="true">授权信息</a></li>
+                            </ul>
+                            <div class="tab-content" id="myTabContent">
+                                <div id="tab-1" class="tab-pane active">
+                                    <div class="panel-body">
+                                        
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label" >
+                                                网点名称
+                                            </label>
+                                            <div class="col-sm-10">
+                                                <input class="form-control" type="text" name="branch_name"  value="{$entity.branch_name}" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label" >
+                                                地区
+                                            </label>
+                                            <div class="col-sm-10">
+                                                <input class="form-control" type="text" name="region"  value="{$entity.region}" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label" >
+                                                地址
+                                            </label>
+                                            <div class="col-sm-10">
+                                                <input class="form-control" type="text" name="address"  value="{$entity.address}" readonly>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">
+                                                详细位置
+                                            </label>
+                                            <div class="col-sm-10">
+                                                <input class="form-control" type="text" name="location"  value="{$entity.location}" readonly>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label" >
+                                                银行类型
+                                            </label>
+                                            <div class="col-sm-10">
+                                                <input class="form-control" type="text" name="bank_id"  value="{$entity.bank_id}" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="tab-2" class="tab-pane">
+  
+                             
+                                        <table class="table table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th width="100">编号</th>
+                                                <th width="100">网点名称</th>
+                                                 <th width="100">安保公司名称</th>
+                                                <th width="100">安保人员</th>
+                                                <th width="100">授权人</th>
+                                                <th width="150">授权时间</th>
+                            
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <foreach name="data" item="vo" > 
+                                                <tr>
+                                                    <td>{$vo.id}</td>
+                                                    <td>{$vo.branch_name}</td>
+                                                    <td>{$vo.escort_name}</td>
+                                                    <td>{$vo.person_names}</td>
+                                                    <td>{$vo.auth_username}</td>                                    
+                                                    <td>{$vo.create_time|date='Y-m-d h:i:s',###}</td> 
+                                                </tr>
+                                            </foreach>
+                                            </tbody>
+                                        </table>
+                                     
+                                </div>
+                            </div>
+                        </div> 
+                        </form>
+                    </div>  
+                    <a href="" title="" data-gallery=""><img class="replacenull" /></a>
+                    <div id="blueimp-gallery" class="blueimp-gallery">
+                        <div class="slides"></div>
+                        <h3 class="title"></h3>
+                        <a class="prev">‹</a>
+                        <a class="next">›</a>
+                        <a class="close">×</a>
+                        <a class="play-pause"></a>
+                        <ol class="indicator"></ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 全局js -->
+        <script src="__PUBLIC__/hplus/js/jquery-2.1.1.min.js"></script>
+        <script src="__PUBLIC__/hplus/js/bootstrap.min.js?v={:C('SYSTEM_VER')}"></script>
+        <script src="__PUBLIC__/hplus/js/layer/layer.min.js?v={:C('SYSTEM_VER')}"></script>
+        <script src="__PUBLIC__/hplus/js/laydate/laydate.js?v={:C('SYSTEM_VER')}"></script>
+        <script type="text/javascript" src="__PUBLIC__/hplus/js/jquery.blueimp-gallery.min.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/hplus/js/icheck/icheck.min.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/hplus/js/uploadify/jquery.uploadify.min.js"></script>
+        <script type="text/javascript" charset="utf-8" src="__PUBLIC__/hplus/js/ueditor/ueditor.config.js"></script>
+        <script type="text/javascript" charset="utf-8" src="__PUBLIC__/hplus/js/ueditor/ueditor.all.min.js"> </script>
+        <script type="text/javascript" charset="utf-8" src="__PUBLIC__/hplus/js/ueditor/lang/zh-cn/zh-cn.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/hplus/js/boot.js?v={:C('SYSTEM_VER')}"></script>
+         <script type="text/javascript">
+            $(document).ready(function () {
+                $(".i-checks").iCheck({checkboxClass:"icheckbox_square-green",radioClass:"iradio_square-green",});
+                
+        </script>
+</body>
+
+</html>

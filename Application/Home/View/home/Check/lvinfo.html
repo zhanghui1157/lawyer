@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>律师认证</title>
+		<meta name="viewport" content="width=device-width, maximum-scale=1.0, initial-scale=1.0">
+		<link  href="__PUBLIC__/home/css/renzheng.css" rel="stylesheet"/>
+		<script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/plug/layui/layui.js"></script>
+	</head>
+	<body>
+		<div class="box shangchang lv_info" style="border-top: none;">
+		    <textarea id="lv_info">
+			{$lv_info}
+			</textarea>
+		</div>
+		<script type="text/javascript">
+		    var callbackdata=function callbackdata(){ 
+        		var s=$('#lv_info').val(); 
+        		
+        		return s;
+            	
+            };
+		</script>
+	</body>
+</html>

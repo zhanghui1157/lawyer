@@ -1,0 +1,129 @@
+<div id="dialog-link">
+
+	<input type="text" id="xjpno" name="{$param.location_addr}" <if condition="empty($param['dataAddr'])"> value="---请点击选择企业位置---" <else/>value="{$param['dataAddr']}"</if> class="form-control" />
+	<input type="hidden" name="{$param.location}" id="gps" value="{$param.dataLocation}">
+</div>
+<div id="dialog" title="请点选地图位置" style="text-align: right">
+    <div class="dialog-first clearfix">
+        <div  id="xjpdiv0" style="width: 100%;border:none">
+            <div id="xjpdiv1" style="width: 100%;border:none">
+                <div id="t1">
+                    <input  type="search" placeholder="输入地址" id="inp1">
+                </div>
+                <div style="clear: both"></div>
+				<div style="width: 1000px">
+				    <div id="dt"></div>
+				    <div id="r-result">
+				        <div style="font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; line-height: normal; font-family: arial, sans-serif; border: 1px solid rgb(153, 153, 153);">
+				            <div style="background: rgb(255, 255, 255);">
+				                <ol style="list-style: none; padding: 0px; margin: 0px;">
+				                    <li style="cursor: pointer; overflow: hidden; line-height: 17px;">
+				                        <span style="background:url(http://api.map.baidu.com/images/markers.png) -23px 0px no-repeat;width:19px;height:25px;cursor:pointer;float:left;*zoom:1;overflow:hidden;margin:2px 3px 0 5px;*margin-right:0px;display:inline;">&nbsp;</span>
+				                        <div style="zoom: 1; overflow: hidden; padding: 0px 5px; background-color: rgb(240, 240, 240);">
+				                            <div style="line-height:20px;font-size:12px;">
+				                                <span style="color:#00c;">
+				                                    <b>银川</b>市
+				                                </span>
+				                            </div>
+				                            <div style="padding:2px 0;line-height:18px;*zoom:1;overflow:hidden;">
+				                                <b style="float:left;font-weight:bold;*zoom:1;overflow:hidden;padding-right:5px;*margin-right:-3px;">地址:</b>
+				                                <span style="color:#666;display:block;zoom:1;overflow:hidden;">
+				                                    <b>银川</b>市
+				                                </span>
+				                            </div>
+				                        </div>
+				                    </li>
+				                </ol>
+				            </div>
+				            <div style="white-space: nowrap; text-align: right; margin-top: 5px; padding: 2px; overflow: hidden; zoom: 1; background: rgb(229, 236, 249);">
+				                <a href="http://api.map.baidu.com/place/search?res=jsapi&amp;query=重庆&amp;region=重庆市&amp;output=html" target="_blank" title="到百度地图查看更多结果" style="color: rgb(119, 119, 204); float: right;">更多结果»
+				                </a>
+				                <div style="float: left; margin-right: 5px;">
+				                    <p style="margin:0;padding:0;white-space:nowrap">
+				                        <span style="margin-right:3px">1</span>
+				                    </p>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+            </div>
+    	</div>
+    </div>
+</div>
+
+<script src="__PUBLIC__/hplus/js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=FXvXjyGShvZEUke1Y1uhYEw2W7UMTZgA"></script>
+<script type="text/javascript" src="__PUBLIC__/hplus/js/jquery-ui.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/hplus/js/xjp-popdialog.js"></script>
+<script>
+	/**
+	 * Created by Administrator on 2017/3/14.
+	 */
+	var amap = {
+	    init:function(){
+	        var location=$('input[name=gps]').val();
+	        var arr=new Array;
+	        if(location!='' && location!=null){
+	            arr=location.split(',');
+	        }else{
+	            arr=['106.255081','38.492397'];
+	        }
+	        amap.loadmap(arr[0],arr[1]);
+	    },
+	    loadmap:function (x,y){
+	        if(this.newmap == null){
+	            var map = new BMap.Map("dt");
+	            var pt = new BMap.Point(x,y);
+	            
+	            var marker = new BMap.Marker(pt);  // 创建标注
+	            map.addOverlay(marker);            // 将标注添加到地图中
+	            marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+	            var pt = new BMap.Point(x,y);  
+	            map.centerAndZoom(pt, 13); 
+	            map.enableScrollWheelZoom(true);
+	            this.newmap = map;
+	        }
+	    },
+	    ser:function (serkey) {
+	        var local = new BMap.LocalSearch(this.newmap, {
+	            renderOptions:{map: this.newmap,panel: "r-result"}
+	        });
+	        local.search(serkey);
+
+
+	    },
+	    mark:function (callback) {
+	        that = this.newmap;
+	        this.newmap.addEventListener("click",function(e){
+	            that.clearOverlays();
+	            
+	            var point = new BMap.Point(e.point.lng,e.point.lat);
+	            var marker = new BMap.Marker(point);  // 创建标注
+	            var geoc = new BMap.Geocoder();    
+	            that.addOverlay(marker);               // 将标注添加到地图中
+	            marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+	            geoc.getLocation(point, function(rs){
+	                var addComp = rs.addressComponents;
+	                callback(e.point.lng,e.point.lat,addComp.province + "/" + addComp.city + "/" + addComp.district + "/" + addComp.street + "/" + addComp.streetNumber);
+	            });  
+	        });
+
+	    }
+	}
+	amap.init();
+
+	amap.mark(function (x,y,addr) {
+	    var val=$("#gps").val(x+','+y);
+	    $("#xjpno")[0].value=addr;
+	    alert('地图位置已选定');
+	    
+
+	})
+
+	$("#inp1").keyup(function(event){
+	    if(event.keyCode == 13){
+	        amap.ser($(this).val());
+	    }
+	});
+</script>

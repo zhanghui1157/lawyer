@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title></title>
+        <meta name="keywords" content="">
+        <meta name="description" content="">
+        <link href="__PUBLIC__/hplus/css/bootstrap.min.css?v={:C('SYSTEM_VER')}" rel="stylesheet">
+        <link href="__PUBLIC__/hplus/css/font-awesome.min.css?v={:C('SYSTEM_VER')}" rel="stylesheet">
+        <link href="__PUBLIC__/hplus/css/animate.min.css" rel="stylesheet">
+        <link href="__PUBLIC__/hplus/css/style.min.css?v={:C('SYSTEM_VER')}" rel="stylesheet">
+        <link href="__PUBLIC__/hplus/js/toastr/toastr.min.css" rel="stylesheet">
+
+        <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=FXvXjyGShvZEUke1Y1uhYEw2W7UMTZgA"></script>
+        <style>
+            #allmap{
+                height: 700px;
+                width: 100%;
+                margin: auto;
+            }
+            .tuli{
+                width: 80%;
+                margin: auto;
+                margin-top: 10px; 
+            }
+            .tuli li{
+                list-style: none;
+                float: left;
+                display: block;
+                width: 20%;
+                font-size: 14px;
+                height: 30px;
+                line-height: 30px;
+                margin:5px;
+            }
+            .bankcolor{
+                height: 30px;
+                width: 80%;
+                padding: 0 20px;
+                background-color: #fff;
+                border-radius: 5px;
+            }
+
+        </style>
+    </head>
+    <body class="gray-bg">
+        <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="ibox-content">
+                <form role="form" class="form-inline" method="get">
+                    <label for="name" class="sr-only">银行类别</label>
+                    <select id="region" name="region" value="{$search['region']}" class="form-control" >
+                        <option value=" ">请选择所在地区</option>
+                        <volist name="regions" id="vo">
+                            <option value="{$vo.name}" {:($entity['region']==$vo['id'])?'selected':''}>{$vo.name}</option>
+                        </volist>
+                    </select>
+                    <select id="bank_id" name="bank_id" value="{$search['bank_id']}" class="form-control" >
+                        <option value="">所有银行</option>
+                        <volist name="banks" id="vo">
+                           <option value="{$vo.id}" {:($search['bank_id']==$vo['id'])?'selected':''}>{$vo.name}</option>
+                        </volist>
+                    </select>
+                    <select id="company_id" name="bank_id" value="{$search['bank_id']}" class="form-control" >
+                        <option value="">所有押运公司</option>
+                        <volist name="company" id="vo">
+                           <option value="{$vo.id}" {:($search['company_id']==$vo['id'])?'selected':''}>{$vo.escort_name}</option>
+                        </volist>
+                    </select>
+                    <div class="tuli">
+                        <ul>
+                            <volist name="company" id="vo">
+                                <li><span>{$vo.escort_name}</span>&nbsp;&nbsp;<span class="bankcolor" style="background-color:{$vo.showcolor};"></span></li>
+                            </volist>
+                        </ul>
+                        <div style="clear: both"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row" style="height: 100%">
+            <div id="allmap"></div>
+        </div>
+    </div>
+        <!-- 全局js -->
+        <script src="__PUBLIC__/hplus/js/jquery-2.1.1.min.js"></script>
+        <script src="__PUBLIC__/hplus/js/bootstrap.min.js?v={:C('SYSTEM_VER')}"></script>
+        <script src="__PUBLIC__/hplus/js/layer/layer.min.js?v={:C('SYSTEM_VER')}"></script>
+        <script src="__PUBLIC__/hplus/js/laydate/laydate.js?v={:C('SYSTEM_VER')}"></script>
+        <script src="__PUBLIC__/hplus/js/toastr/toastr.min.js?v={:C('SYSTEM_VER')}"></script>
+        <script type="text/javascript" src="__PUBLIC__/hplus/js/boot.js?v={:C('SYSTEM_VER')}"></script>
+
+<script type="text/javascript">
+    var publicPath = "__PUBLIC__/admin";
+    // 百度地图API功能
+    var map = new BMap.Map("allmap",{minZoom:10,maxZoom:18});    // 创建Map实例
+        map.centerAndZoom(new BMap.Point(105.196977,37.52445), 12);  // 初始化地图,设置中心点坐标和地图级别
+
+    $("#region").change(function(){
+        var placename=$(this).val();
+        var myGeo = new BMap.Geocoder();
+        // 将地址解析结果显示在地图上,并调整地图视野
+        myGeo.getPoint(placename, function(point){
+            if (point) {
+                map.centerAndZoom(point, 14);
+                map.addOverlay(new BMap.Marker(point));
+            }else{
+                alert("您选择地址没有解析到结果!");
+            }
+        }, "中卫市");
+
+        //建立多边形区域
+        var bdary = new BMap.Boundary();
+        bdary.get(placename, function(rs){       //获取行政区域 
+            var count = rs.boundaries.length; //行政区域的点有多少个
+            if (count === 0) {
+                alert('未能获取当前输入行政区域');
+                return ;
+            }
+            var pointArray = [];
+            for (var i = 0; i < count; i++) {
+                var ply = new BMap.Polygon(rs.boundaries[i], {strokeWeight: 2, strokeColor: "#ff0000",fillColor:"#ffffff",fillOpacity:0.1}); //建立多边形覆盖物
+                map.addOverlay(ply);  //添加覆盖物
+                pointArray = pointArray.concat(ply.getPath());
+            }    
+            map.setViewport(pointArray);    //调整视野  
+            addlabel();               
+        });   
+    });
+    
+    //添加地图类型控件
+    map.addControl(new BMap.MapTypeControl({
+        mapTypes:[
+            BMAP_NORMAL_MAP,
+            BMAP_HYBRID_MAP
+        ]}));     
+    map.setCurrentCity("中卫");          // 设置地图显示的城市 此项是必须设置的
+    map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+
+
+function ComplexCustomOverlay(point, text,color) { // 构造函数
+    this._point = point;
+    this._text = text;
+    this.color=color;
+}
+ComplexCustomOverlay.prototype = new BMap.Overlay();
+ComplexCustomOverlay.prototype.addEventListener = function (event, fun) { // 监听事件 通过构造函数的prototype属性 添加任自定义的方法
+    this._div['on' + event] = fun;
+}
+
+
+ComplexCustomOverlay.prototype.initialize = function (map) {
+    var classview=map.getZoom();
+    this._map = map;
+    var A = this._div = document.createElement("div");
+    if(classview<14){
+        A.style.display = "block";
+        A.style.position = "absolute";
+        A.style.zIndex = BMap.Overlay.getZIndex(this._point.lat);
+        A.style.opacity=1;
+        A.style.borderRadius = "4px";
+        A.style.color = '#fff';
+        A.style.padding = "2px 10px 2px 10px";
+        A.style.whiteSpace = "nowrap";
+        A.style.MozUserSelect = "none";
+
+        var that = this;
+        var img = this._img = document.createElement("img");
+        img.src = publicPath+"/img/wx.png";
+        img.style.float = "left";    
+        img.style.width = "30px";
+        img.style.position = "relative";
+        img.style.top = "-25px";
+        img.style.left = "-14px";
+        img.style.padding = "0 -5px 0 -5px";
+        img.style.marginLeft = "0px";
+        img.style.zIndex = "9999";
+        
+        A.appendChild(img);
+        img.onmouseover = function () {
+            img.title=that._text;
+            img.style.width = "40px";
+            img.style.top = "-40px";
+            img.style.left = "-18px";
+        }
+
+        img.onmouseout = function () {
+            img.title='';
+            img.style.width = "30px";
+            img.style.top = "-30px";
+            img.style.left = "-14px";
+        }
+
+    }else{
+        A.style.display = "block";
+        A.style.position = "absolute";
+        A.style.zIndex = BMap.Overlay.getZIndex(this._point.lat);
+        A.style.backgroundColor =this.color;
+        A.style.opacity=1;
+        A.style.borderRadius = "4px";
+        A.style.color = '#fff';
+        A.style.height = "24px";
+        A.style.textAlign = "right";
+        A.style.padding = "2px 10px 2px 10px";
+        A.style.lineHeight = "20px";
+        A.style.textAlign = "center";
+        A.style.whiteSpace = "nowrap";
+        A.style.MozUserSelect = "none";
+        A.style.fontSize = "12px"
+        var span1 = this._span1 = document.createElement("span");
+        span1.style.marginLeft="15px";
+        A.appendChild(span1);
+        span1.appendChild(document.createTextNode(this._text));      
+        var that = this;
+
+        var img = this._img = document.createElement("img");
+        img.src = publicPath+"/img/wx.png";
+        img.style.float = "left";    
+        img.style.width = "24px";
+        img.style.position = "relative";
+        img.style.top = "-25px";
+        img.style.left = "-10px";
+        img.style.padding = "0 -5px 0 -5px";
+        img.style.marginLeft = "0px";
+        img.style.zIndex = "9999";
+        
+        A.appendChild(img);
+        A.onmouseover = function () {
+            A.style.backgroundColor = "#2d6b4f";
+            A.style.color = "#fff";  
+            A.style.cursor="pointer";
+            A.style.zIndex=100;
+        }
+
+        A.onmouseout = function () {
+            this.style.backgroundColor = that.color;
+            this.style.color = "#fff";
+            this.getElementsByTagName("span")[0].innerHTML = that._text;
+            this.style.zIndex=1;
+        }
+
+    }
+        
+    map.getPanes().labelPane.appendChild(A);
+
+    return A;
+}
+// 实现绘制方法   
+ComplexCustomOverlay.prototype.draw = function () {
+    var map = this._map;
+    var pixel = map.pointToOverlayPixel(this._point);
+    this._div.style.left = pixel.x + "px";
+    this._div.style.top = pixel.y  + "px";
+}
+
+
+/********地图鼠标滚轮事件**************/
+map.addEventListener("zoomend", function () {
+    map.clearOverlays();
+    ajaxReturn();
+});
+/********发生事件调用ajax从后台返回需要的数据***********/
+function ajaxReturn(){
+    var id=$('#bank_id').val();
+    var company_id=$("#company_id").val();
+    map.clearOverlays();
+    $.ajax({
+        type:"post",
+        async:false,
+        data:{id:id,company_id:company_id},
+        url:"/Admin/Base/index/getdata.html",
+        success:function(data){
+            console.log(data);
+            var attr=[];
+            for(var i=0;i<data.length;i++){
+                attr.push(data[i]);
+            }
+            if(attr.length>=1){
+                for(var i=0; i<attr.length; i++){
+                    (function(x){
+                        var arr = attr[x].split("|");
+                        var lng = arr[0].split(",")[0];
+                        var lat = arr[0].split(",")[1];
+                        var title = arr[1];
+                        var id = arr[2];
+                        var color=arr[3];
+                        // 创建自定义标注
+                        var point = new BMap.Point(lng, lat);
+                        var myCompOverlay = new ComplexCustomOverlay(point, title,color);
+                        map.addOverlay(myCompOverlay);
+
+                        myCompOverlay.addEventListener("click", function () {
+                            map.clearOverlays();
+                            ajaxReturn();
+                            var ceng=map.getZoom();
+                            switch(ceng){
+                                case 12:
+                                    map.centerAndZoom(point, 14)
+                                break;
+                                case 13:
+                                    map.centerAndZoom(point, 14)
+                                break;
+                                case 14:
+                                    map.centerAndZoom(point, 16)
+                                break;
+                                case 15:
+                                    map.centerAndZoom(point, 16)
+                                break;
+                                case 16:
+                                    detailInfo(id);
+                                break; 
+                                case 17:
+                                    detailInfo(id);
+                                break; 
+                                case 18:
+                                    detailInfo(id);
+                                break;
+                            }
+                        });
+                        
+                    })(i);
+                };
+            }
+                
+
+        }
+    });
+}
+
+function detailInfo(id){
+    layer.open({
+        type: 2,
+        title: '网点详情',
+        shadeClose: true,
+        shade: false,
+        maxmin: true, //开启最大化最小化按钮
+        area: ['80%', '80%'],
+        content: "/Admin/Base/index/detailInfo.html?id="+id
+    });
+}
+$("#bank_id").change(function(){
+    ajaxReturn();
+})
+$("#company_id").change(function(){
+    ajaxReturn();
+})
+
+$("#bankSearch").mouseover(function(){
+    
+})
+$("#bankSearch").mouseout(function(){
+    
+})
+
+ajaxReturn();
+</script>
+    </body>
+</html>

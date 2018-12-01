@@ -1,0 +1,56 @@
+<extend name="Public/edit"/>
+<block name="content">
+    <div class="ibox-content">
+        <form method="post" id='submitForm' name='submitForm' class="form-horizontal">
+            <input type="hidden" value="{$entity.id}" name="id">
+            <div class="tabs-container">
+                <div class="tab-content" id="myTabContent">
+                    <div id="tab-1" class="tab-pane active">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">审核状态</label>
+                                <div class="col-sm-10">
+                                   <label class="checkbox-inline i-checks"><input class="table_radio" type='radio' name='check_status' value='1' {:($entity['check_status']=='1' )  ?'checked':''}/> 待审核 </label>
+                                    <label class="checkbox-inline i-checks"><input class="table_radio" type='radio' name='check_status' value='2' {:($entity['check_status']=='2' ) ?'checked':''}/> 通过 </label>
+                                    <label class="checkbox-inline i-checks"><input class="table_radio" type='radio' name='check_status' value='3' {:($entity['check_status']=='3' ) ?'checked':''}/> 驳回 </label>
+                                </div>
+                            </div>    
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">驳回原因</label>
+                                <div class="col-sm-10">
+                                   <textarea name="bo" class="form-control">{$entity.bo}</textarea>
+                                </div>
+                            </div>                                                                         
+                        </div>
+                    </div>                                
+                </div>
+            </div> 
+        </form>
+    </div>   
+    
+    <!--数据表单结束!-->
+    <!--操作按钮开始!-->
+    <div class="ibox-content">
+        <div class="form-actions no-margin">
+            <div class="next-prev-btn-container pull-right">
+                <a href="javascript:void(0)" id="submitbutton" class="btn btn-primary radius">提交</a>
+                <a href="javascript:void(0)"  id="cancelbutton" class="btn btn-default radius">关闭</a>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <!--操作按钮结束!-->
+</block>
+<block name="script">
+    <script type="text/javascript">
+        //表单提交的地址
+        var subAjaxUrl="{:U('check_status')}";
+        //表单验证的具体内容
+        var validate=new Array;
+        validate[0]=new Array;
+        validate[0][0]='#title';;
+        validate[0][1]='标题不能为空';
+        
+    </script>
+</block>

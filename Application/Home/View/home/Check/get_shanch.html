@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>律师认证</title>
+		<meta name="viewport" content="width=device-width, maximum-scale=1.0, initial-scale=1.0">
+		<link  href="__PUBLIC__/home/css/renzheng.css" rel="stylesheet"/>
+		<script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/plug/layui/layui.js"></script>
+		<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.3.2.js"></script>
+	</head>
+	<body>
+		<div class="box shangchang" style="border-top: none;">
+		    <volist name="data" id="vo">
+			<h3>{$vo.name}</h3>
+			<ul>
+			    <volist name="vo.child" id="vd">
+				<li  class="tag_li <eq name='vd.choose' value='1'> isok </eq>"   rel="{$vd.id}">{$vd.name}</li>
+				</volist>
+			</ul>
+			</volist>
+			
+		</div>
+		<script type="text/javascript">
+		$('.tag_li').click(function(){
+			   if($(this).hasClass('isok')){
+			       $(this).removeClass('isok');
+			   }else{
+			       $(this).addClass('isok');
+			   }
+			   
+			})
+		    var callbackdata=function callbackdata(){
+            	var obj=$('.isok'); //选择所有name="'test'"的对象，返回数组 
+        		//取到对象数组后，我们来循环检测它是不是被选中 
+        		var s=''; 
+				if(obj.length>4){
+				   alert('最多选择四个擅长领域');
+				   return false;
+				}
+        		for(var i=0; i<obj.length; i++){ 
+				    if(i==0){
+					   s+=obj[i].getAttribute('rel');
+					}else{
+					   s+=','+obj[i].getAttribute('rel'); //如果选中，将value添加到变量s中  
+					}
+	        		
+	        		
+        	    } 
+        		return s;
+            	
+            };
+		
+		</script>
+	</body>
+</html>

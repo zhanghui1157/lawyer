@@ -1,0 +1,20 @@
+<input type="hidden" name="{$param.namePro}" value="" />
+<input type="hidden" name="{$param.nameCity}" value=""/>
+<input type="hidden" name="{$param.nameArea}" value=""/>
+<select id="provinces" class="form-control" style="width:33.3%;float:left;"> </select>
+<select id="cities"  class="form-control" style="width:33.3%;float:left;"> </select>
+<select id="areas" class="form-control" style="width:33.3%;float:left;"> </select>
+
+<script src="__PUBLIC__/hplus/js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/hplus/js/areas.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var areaData={province:'{$entity.company_base_province}',city:'{$entity.company_base_citie}',area:'{$entity.company_base_area}'};
+        AreaTool.init(areaData,call_area_change);
+        function call_area_change(){
+            $('[name="{$param.namePro}"]').val(AreaTool.province);
+            $('[name="{$param.nameCity}"]').val(AreaTool.city);
+            $('[name="{$param.nameArea}"]').val(AreaTool.area);
+        }
+    });  
+</script>

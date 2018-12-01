@@ -1,0 +1,1 @@
+a:1:{s:4:"file";a:5:{s:4:"name";s:23:"IMG_20180815_232108.jpg";s:4:"type";s:10:"image/jpeg";s:8:"tmp_name";s:22:"C:\Windows\phpCCCE.tmp";s:5:"error";i:0;s:4:"size";i:3612143;}}

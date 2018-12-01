@@ -1,0 +1,36 @@
+[ 2018-11-22T08:47:18+08:00 ] 127.0.0.1 /Public/manager/scripts/manager/boot.js
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000012s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000423s ]
+ERR: 无法加载模块:Public
+
+[ 2018-11-22T08:47:18+08:00 ] 127.0.0.1 /Public/manager/scripts/manager/boot.js
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000027s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001066s ]
+ERR: 无法加载模块:Public
+
+[ 2018-11-22T08:47:18+08:00 ] 127.0.0.1 /favicon.ico
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000016s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000391s ]
+ERR: 无法加载模块:Favicon
+
+[ 2018-11-22T08:53:10+08:00 ] 127.0.0.1 /Public/manager/scripts/manager/boot.js
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000012s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000340s ]
+ERR: 无法加载模块:Public
+
+[ 2018-11-22T08:53:10+08:00 ] 127.0.0.1 /Public/manager/scripts/manager/boot.js
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000013s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000372s ]
+ERR: 无法加载模块:Public
+
+[ 2018-11-22T08:53:11+08:00 ] 127.0.0.1 /Public/manager/scripts/manager/boot.js
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000014s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000384s ]
+ERR: 无法加载模块:Public
+

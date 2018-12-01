@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title></title>
+        <meta name="keywords" content="">
+        <meta name="description" content="">
+        <link href="__PUBLIC__/hplus/css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
+        <link href="__PUBLIC__/hplus/css/font-awesome.min.css?v=4.3.0" rel="stylesheet">
+        <link href="__PUBLIC__/hplus/css/animate.min.css" rel="stylesheet">
+        <link href="__PUBLIC__/hplus/css/style.min.css?v=3.2.0" rel="stylesheet">
+        <link href="__PUBLIC__/hplus/css/combo.select.css" rel="stylesheet">
+    </head>
+    <body class="gray-bg">
+        <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>{$keywords}列表</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <form role="form" class="form-inline" method="get">
+                            
+                            <div class="jq22">
+                                <select class="form-control" name="lawyer">
+                                    <option value=''>全部律师</option>
+                                    <volist name='lawyer' id="vo">
+                                        <option value="{$vo.id}" {:($search['lawyer']==$vo['id'])?'selected':''}>{$vo.user_name}</option>
+                                    </volist>
+                                </select>
+                            </div>
+                          
+                            <input type="hidden" name="type" value="{$type}">
+                            <button class="btn btn-primary" type="submit" style="margin-top:9px">搜索</button>     
+                        </form>
+                    </div>
+<div class="ibox-content">
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th width="100">编号</th>
+                    <th width="100">律师姓名</th>
+                    <th width="100">总收入（元）</th>
+                    <th width="100">账户余额</th>
+                    <th width="100">详情</th>
+                </tr>
+            </thead>
+            <tbody>
+            <foreach name="list" item="vo" > 
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.user_name}</td>
+                    <td>{$vo.money}</td>
+                    <td>{$vo.now_money}</td>
+                    <td>    
+                        <a href="javascript:void(0)" address="{:U('laywerLog',array('id'=>$vo['user_id']))}"  tip="详情" onclick="winopen(this);" class="ajaxsubmit">收入日志</a>
+                    </td>
+                </tr>
+            </foreach>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        共计：{$count}条&nbsp;&nbsp;{$page}
+    </div>
+</div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <!-- 全局js -->
+        <script src="__PUBLIC__/hplus/js/jquery-2.1.1.min.js"></script>
+        <script src="__PUBLIC__/hplus/js/bootstrap.min.js?v={:C('SYSTEM_VER')}"></script>
+        <script src="__PUBLIC__/hplus/js/layer/layer.min.js?v={:C('SYSTEM_VER')}"></script>
+        <script src="__PUBLIC__/hplus/js/laydate/laydate.js?v={:C('SYSTEM_VER')}"></script>
+        <script type="text/javascript" src="__PUBLIC__/hplus/js/boot.js?v={:C('SYSTEM_VER')}"></script>
+        <script src="__PUBLIC__/hplus/js/jquery.combo.select.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/hplus/js/winopen.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {          
+                $('select').comboSelect();
+                $('a.ajaxdo').click(function(){
+                    var url=$(this).attr('href');
+                    parent.layer.confirm($(this).attr('tip'), {
+                        title:'操作确认',
+                        btn: ['确定','取消'], //按钮
+                        shade: true, //显示遮罩
+                        shade: 0.5
+                    }, function(){
+                        execute(url, 1, null,function(data){
+                            if(data.code==1){parent.layer.msg(data.msg, {icon:1,shadeClose: true,shade: 0.5,end:function(){window.location.reload();}});}else{parent.layer.msg(data.msg, {icon:2,shadeClose: true,shade: 0.5});}
+                        }, function(){
+                            parent.layer.msg('服务器处理失败', {icon:2,shadeClose: true,shade: 0.5});
+                        }); 
+                    }, function(){
+
+                    });
+                    return false;
+                });
+            });
+        </script>
+    </body>
+</html>
+        

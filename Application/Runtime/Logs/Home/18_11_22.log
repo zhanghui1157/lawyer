@@ -1,0 +1,31 @@
+[ 2018-11-22T08:55:16+08:00 ] 127.0.0.1 /auto.php
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000013s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000458s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000910s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000980s ]
+SQL: SHOW COLUMNS FROM `db_lawyer_cold` [ RunTime:0.0115s ]
+SQL: SELECT * FROM `db_lawyer_cold` WHERE `status` = 1 AND `create_time` < 1542675316  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `db_order_deal` [ RunTime:0.0105s ]
+SQL: SELECT `id`,`user_id` FROM `db_order_deal` WHERE `answer_status` = 0 AND `create_time` < 1542846316 AND `is_user` = 1  [ RunTime:0.0007s ]
+SQL: SELECT * FROM `db_order_deal` WHERE `status` = 1 AND `deal_time` < 1542761716  [ RunTime:0.0009s ]
+SQL: SHOW COLUMNS FROM `db_order` [ RunTime:0.0107s ]
+SQL: SELECT * FROM `db_order` WHERE `money_status` = 1 AND `type` = 1  [ RunTime:0.0015s ]
+SQL: SHOW COLUMNS FROM `db_combo` [ RunTime:0.0088s ]
+SQL: SELECT `number` FROM `db_combo` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0009s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_order_deal` WHERE `order_id` = 512 AND `status` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT `number` FROM `db_combo` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_order_deal` WHERE `order_id` = 513 AND `status` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT `number` FROM `db_combo` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_order_deal` WHERE `order_id` = 514 AND `status` = 2 LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT `number` FROM `db_combo` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0014s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_order_deal` WHERE `order_id` = 515 AND `status` = 2 LIMIT 1   [ RunTime:0.0042s ]
+SQL: SELECT `number` FROM `db_combo` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_order_deal` WHERE `order_id` = 521 AND `status` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT `number` FROM `db_combo` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_order_deal` WHERE `order_id` = 525 AND `status` = 2 LIMIT 1   [ RunTime:0.0004s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001647s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001718s ]
+

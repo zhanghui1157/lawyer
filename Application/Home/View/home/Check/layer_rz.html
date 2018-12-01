@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>律师认证</title>
+		<meta name="viewport" content="width=device-width, maximum-scale=1.0, initial-scale=1.0">
+		<link  href="__PUBLIC__/home/css/renzheng.css" rel="stylesheet"/>
+        <link  href="__PUBLIC__/home/css/style.css" rel="stylesheet">
+		<script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/plug/layui/layui.js"></script>
+		<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.3.2.js"></script>
+	</head>
+	<body>
+		<div class="box" style="border-top: none;">
+			<div class="boxtitle">
+				<i class="icon iconfont base">&#xe63a;</i> 基本信息
+			</div>
+			<div class="boxcon">
+				<p>姓名：<span id="name"> </span></p>
+				<p>电话：<span id="mobile"> </span></p>
+				<p>家乡：<span id="address"></span> </p>
+			</div>
+		</div>
+		<div class="box">
+			<div class="boxtitle">
+				<i class="icon iconfont renzheng">&#xe761;</i> 认证信息
+			</div>
+			<div class="boxcon">
+				<div class="imgbox">
+					<div class="imginto"><div class="tubiao" id="layer_headpic"><i class=" iconfont imgjia">&#xe7cf;</i><h5>上传律师照片</h5></div><div class="imgdel" id="imgdel_head">-</div></div>
+					<input type="hidden" id="headpic_url">
+					<input type="hidden" id="layer_cert_url">
+					<div class="imginto"><div class="tubiao" id="layer_cert"><i class=" iconfont imgjia">&#xe7cf;</i><h5>上传律师职业证</h5></div><div class="imgdel" id="imgdel_cert">-</div></div>
+				</div>
+				<ul>
+					<li>所属律所:<input type="text" id="lv_name" value="" /></li>
+					
+					<li><a href="#"><span><i class="icon iconfont">&#xe7ee;</i></span>选择地区：<p id="expressArea">请选择</p><input type="hidden" id="area_arr"></a></li>
+					<li><a href="#"><span><i class="icon iconfont">&#xe7ee;</i></span>毕业学校：<p id="school">请选择</p><input type="hidden" id="school_arr"></a></li>
+					<li><a href="#"><span><i class="icon iconfont">&#xe7ee;</i></span>擅长领域：<p id="shan_chang">请选择</p><input type="hidden" id="shan_id"></a></li>
+					<li><a href="#"><span><i class="icon iconfont">&#xe7ee;</i></span>律所简介：<p id="lv_info_box"><i class=" iconfont yes">&#xe655;</i><font id="lv_info"></font></p></a></li>
+					<li><a href="#"><span><i class="icon iconfont">&#xe7ee;</i></span>个人简介：<p id="self_info_box"><i class=" iconfont nono">&#xe601;</i><font id="self_info"></font></p></a></li>
+				</ul>
+			</div>
+		</div>
+		
+
+		<section id="areaLayer" class="express-area-box">
+		<header>
+		<h3>选择地区</h3>
+		<a id="backUp" class="back" href="javascript:void(0)" title="返回"></a>
+		<a id="closeArea" class="close" href="javascript:void(0)" title="关闭"></a>
+		</header>
+		<article id="areaBox">
+		<ul id="areaList" class="area-list"></ul>
+		</article>
+		</section>
+		<div id="areaMask" class="mask"></div>
+		
+		<section id="schoolLayer" class="express-area-box">
+		<header>
+		<h3>选择学校</h3>
+		<a id="backUp_school" class="back" href="javascript:void(0)" title="返回"></a>
+		<a id="closeSchool" class="close" href="javascript:void(0)" title="关闭"></a>
+		</header>
+		<article id="schoolBox">
+		<ul id="schoolList" class="area-list"></ul>
+		</article>
+		</section>
+		<div id="schoolMask" class="mask"></div>
+		
+		<div id="lv_info_div" style="display:none">
+			<div class="box shangchang lv_info"  style="border-top: none;">
+				<textarea id="lv_info2">
+				</textarea>
+			</div>
+		</div>
+		
+		<div id="self_info_div" style="display:none">
+			<div class="box shangchang lv_info"  style="border-top: none;">
+				<textarea id="self_info2">
+				</textarea>
+			</div>
+		</div>
+		<div class="intorenzheng" id="submit"><input type="button" value="提交" ></div>
+		
+		<script type="text/javascript">
+			var expressArea,areaCont,schoolCont,areaList=$("#areaList"),schoolList=$("#schoolList"),areaTop=areaList.offset().top;
+		    $(document).ready(function(){
+			    
+			    //用户信息
+			    getLawyerInfo();
+				//图片上传
+				 layui.use('upload', function(){
+					  var upload = layui.upload;
+					  //执行实例
+					  var uploadInst = upload.render({
+						elem: '#layer_headpic' //绑定元素
+						,url: '{:U("uploadifythumb")}' //上传接口
+						,done: function(res){
+						  if(res.code==1){
+							$('#headpic_url').val(res.data);
+							$("#layer_headpic").html('<div class="igbox"><img class="img" style="height:100px;" src="'+res.data+'"></div>');
+							$('#imgdel_head').css('display','block');
+							layer.msg('上传律师照片成功',{time:1000,icon:1});
+						  }else{
+							layer.msg('上传律师照片失败',{time:1000,icon:2});
+						  }
+						}
+						,error: function(){
+						  //请求异常回调
+						}
+					  });
+					  var uploadInst2 = upload.render({
+						elem: '#layer_cert' //绑定元素
+						,url: '{:U("uploadifythumb")}' //上传接口
+						,done: function(res){
+						  if(res.code==1){
+							$('#layer_cert_url').val(res.data);
+							$("#layer_cert").html('<div class="igbox"><img class="img" style="height:100px;" src="'+res.data+'"></div>');
+							$('#imgdel_cert').css('display','block');
+							layer.msg('上传律师职业证成功',{time:1000,icon:1});
+						  }else{
+							layer.msg('上传律师职业证失败',{time:1000,icon:2});
+						  }
+						}
+						,error: function(){
+						  //请求异常回调
+						}
+					  });
+				});
+				//图片删除
+				$('#imgdel_head').click(function(){
+				     $('#headpic_url').val('');
+					 $("#layer_headpic").html('<div class="igbox"><i class=" iconfont imgjia">&#xe7cf;</i><h5>上传律师照片</h5></div>');
+					 $('#imgdel_head').css('display','none');
+						
+				})
+				$('#imgdel_cert').click(function(){
+				     $('#layer_cert_url').val('');
+					 $("#layer_cert").html('<div class="igbox"><i class=" iconfont imgjia">&#xe7cf;</i><h5>上传律师职业证</h5></div>');
+					 $('#imgdel_cert').css('display','none');
+						
+				})
+				//职业地选择
+				intProvince();
+				$("#expressArea").click(function(){
+				  $("#areaMask").fadeIn();
+				  $("#areaLayer").animate({"bottom":0});
+				});
+				$("#areaMask, #closeArea").click(function(){clockArea();});
+				//学校选择
+				intSchool();
+				$("#school").click(function(){
+				  $("#schoolMask").fadeIn();
+				  $("#schoolLayer").animate({"bottom":0});
+				});
+				$("#schoolMask, #closeSchool").click(function(){clockSchool();});
+				//擅长领域：
+				$('#shan_chang').click(function(){
+				    var shan_id=$('#shan_id').val();
+					layer.open({
+						type: 2,
+						title: '擅长领域',
+						shadeClose: false,
+						shade: false,
+						maxmin: false, //开启最大化最小化按钮
+						area: ['100%', '100%'],
+						content: '{:U("Check/get_shanch")}?shan_id='+shan_id,
+						btn: ['确定'],
+						yes: function(index,layero){
+							//当点击‘确定’按钮的时候，获取弹出层返回的值
+							var shan_id = $(layero).find("iframe")[0].contentWindow.callbackdata();
+	                        if(shan_id){
+							    $.ajax({
+									url:"{:U('find_shanch')}",
+									type:"get",
+									dataType:"JSON",
+									data:{shan_id:shan_id},
+									success:function(e){
+										//var obj = JSON.parse(e); //由JSON字符串转换为JSON对象
+										if(e.code==1){
+											$('#shan_id').val(shan_id);
+											$('#shan_chang').html(e.data);
+										}else{
+											layer.alert(e.message) ;
+										}
+										
+										
+									},
+									error: function (jqXHR, textStatus, errorThrown) {
+										  alert(jqXHR.responseText);
+									},
+									
+									
+								});
+								
+								//最后关闭弹出层
+								layer.close(index);
+							}
+							
+						},
+						cancel: function(){
+							//右上角关闭回调
+						}
+					});
+					return false;
+				});
+				//律所简介：
+				$('#lv_info_box').click(function(){
+				    $('#lv_info2').text($('#lv_info').text());
+					layer.open({
+						type: 1,
+						title: '律所简介',
+						shadeClose: false,
+						shade: false,
+						maxmin: false, //开启最大化最小化按钮
+						area: ['100%', '100%'],
+						content: $('#lv_info_div').html(),
+						btn: ['确定'],
+						yes: function(index,layero){
+							//当点击‘确定’按钮的时候，获取弹出层返回的值							
+							var text = $(layero).find('#lv_info2').val();
+							$('#lv_info').html(text);
+							//最后关闭弹出层
+							layer.close(index);
+						},
+						cancel: function(){
+							//右上角关闭回调
+						}
+					});
+					return false;
+				});
+				var callbackdata = function () {
+					var data = $('#lv_info').val(); 
+					return data;
+				}
+				//个人简介：
+				$('#self_info_box').click(function(){
+				    $('#self_info2').text($('#self_info').text());
+					layer.open({
+						type: 1,
+						title: '个人简介',
+						shadeClose: false,
+						shade: false,
+						maxmin: false, //开启最大化最小化按钮
+						area: ['100%', '100%'],
+						content: $('#self_info_div').html(),
+						btn: ['确定'],
+						yes: function(index,layero){
+							//当点击‘确定’按钮的时候，获取弹出层返回的值
+							var text = $(layero).find('#self_info2').val();
+	   
+							$('#self_info').html(text);
+							//最后关闭弹出层
+							layer.close(index);
+						},
+						cancel: function(){
+							//右上角关闭回调
+						}
+					});
+					return false;
+				});
+				//提交  
+				$('#submit').click(function(){
+				    var headpic_url=$('#headpic_url').val();
+					var layer_cert_url=$('#layer_cert_url').val();
+				    var lv_name=$('#lv_name').val();
+					var area_arr=$('#area_arr').val();
+					var school_arr=$('#school_arr').val();
+					var shan_id=$('#shan_id').val();
+					var lv_info=$('#lv_info').text();
+					var self_info=$('#self_info').text();
+					var user_id="{$id}";
+                    if(headpic_url==''){layer.alert('律师照片不能为空');return;}
+					if(layer_cert_url==''){layer.alert('律师职业证不能为空');return;}
+					if(lv_name==''){layer.alert('所属律所不能为空');return;}
+					if(area_arr==''){layer.alert('地区不能为空');return;}
+					if(school_arr==''){layer.alert('毕业学校不能为空');return;}
+					if(shan_id==''){layer.alert('擅长领域不能为空');return;}
+					if(lv_info==''){layer.alert('律所简介不能为空');return;}
+					if(self_info==''){layer.alert('个人简介不能为空');return;}
+					
+					$.ajax({
+							type:'POST',
+							url:'{:U("Check/renzheng")}',
+							dataType:"JSON",
+							data:{user_id:user_id,headimg:headpic_url,credential:layer_cert_url,company:lv_name,area_arr:area_arr,school_arr:school_arr,keywords:shan_id,company_des:lv_info,des:self_info},
+							success:function(e){
+							    layer.alert(e.msg);
+								if(e.code==1){  			                        
+									wx.miniProgram.getEnv(function (res) {
+									   if (res.miniprogram) {
+											wx.miniProgram.navigateTo({url: '/pages/mine/index'});
+									   }
+									});
+								}
+							},
+							error:function(err,etype,xhr){
+								console.log(err);
+								console.log(etype);
+								console.log(xhr);
+							}
+					});
+				})
+			})
+			function getLawyerInfo(){
+				 $.ajax({
+					 type:'POST',
+					 url:'{:U("Check/getLawyerInfo")}',
+					 dataType:"JSON",
+					 data:{id:"{$id}"},
+					 success:function(e){
+						 if(e.code==1){
+							 $('#name').text(e.data.user_name);
+							 $('#mobile').text(e.data.mobile);
+							 $('#address').text(e.data.home_pro+e.data.home_city+e.data.home_area+e.data.home_addr);
+							 //认证信息
+							 var check_info=e.data.check_info;
+							 if(check_info.headimg!='' && check_info.headimg!=null){							  
+							     //律师照片
+								$('#headpic_url').val(check_info.headimg);
+								$("#layer_headpic").html('<div class="igbox"><img class="img" style="height:100px;" src="'+check_info.headimg+'"></div>');
+								$('#imgdel_head').css('display','block');
+							 }
+							 if(check_info.credential!='' && check_info.credential!=null){							  
+							     //职业证照片
+								$('#layer_cert_url').val(check_info.credential);
+								$("#layer_cert").html('<div class="igbox"><img class="img" style="height:100px;" src="'+check_info.credential+'"></div>');
+								$('#imgdel_cert').css('display','block');
+							 }
+							 if(check_info.company!='' && check_info.company!=null){
+							    $('#lv_name').val(check_info.company);
+							 }
+							 if(check_info.now_area_id!='' && check_info.now_area_id!=null){
+							    var address=check_info.now_pro+'>'+check_info.now_city+'>'+check_info.now_area;
+							    $("#expressArea").html(address);
+								$("#area_arr").val(check_info.now_area_id);
+							 }
+							 if(check_info.school_id!='' && check_info.school_id!=null){
+							    $("#school").html(check_info.school);
+								$("#school_arr").val(check_info.school_id);;
+							 }
+							 if(check_info.keywords!='' && check_info.keywords!=null){
+							    $('#shan_id').val(check_info.keywords);
+								$('#shan_chang').html(check_info.keywords_string);
+							 }
+							
+							 if(check_info.company_des!='' && check_info.company_des!=null){
+							    var text='<i class=" iconfont yes">&#xe655;</i><font id="lv_info">'+check_info.company_des+'</font>';
+							    $('#lv_info_box').html(text);
+								$('#lv_info2').text(check_info.company_des);
+							 }else{
+							    $('#lv_info_box').html('<i class=" iconfont nono">&#xe601;</i><font id="lv_info"></font>');
+							 }
+							 if(check_info.des!='' && check_info.des!=null){
+							    $('#self_info_box').html('<i class=" iconfont yes">&#xe655;</i><font id="self_info">'+check_info.des+'</font>');
+								$('#self_info2').text(check_info.des);
+							 }else{
+							    $('#self_info_box').html('<i class=" iconfont nono">&#xe601;</i><font id="self_info"></font>');
+							 }
+							
+						 }else{
+							 layer.alert(e.msg);
+						 }
+						 
+					 },
+					 error: function (jqXHR, textStatus, errorThrown) {
+						 alert(jqXHR.responseText);
+					 }
+				})
+			}
+
+			//职业地选择
+			function intProvince(){
+			     areaCont='';
+			     $.ajax({
+				        type:'POST',
+						url:'{:U("Check/area_choose")}',
+						dataType:"JSON",
+						data:{id:0},
+						success:function(e){
+							if(e.code==1){  			                        
+								var method_count=e.data;							    
+								if(method_count.length>0){
+									for (var c = 0; c < method_count.length; c++) {
+										var rowc=method_count[c];
+										areaCont+='<li onClick="selectP('+rowc.id+');">'+rowc.name+'</li>';
+									}
+									areaList.html(areaCont);
+								}
+                               }
+						},
+						error:function(err,etype,xhr){
+							console.log(err);
+							console.log(etype);
+							console.log(xhr);
+						}
+				});
+			    
+				$("#areaBox").scrollTop(0);
+				$("#backUp").removeAttr("onClick").hide();
+			}
+			
+			function selectP(id){
+			    areaCont='';
+				$.ajax({
+				        type:'POST',
+						url:'{:U("Check/area_choose")}',
+						dataType:"JSON",
+						data:{id:id},
+						success:function(e){
+							if(e.code==1){  			                        
+								var data_list=[];
+								var method_count=e.data;								    
+								if(method_count.length>0){
+									for (var c = 0; c < method_count.length; c++) {
+										var rowc=method_count[c];
+										areaCont+='<li onClick="selectC('+id+','+rowc.id+');">'+rowc.name+'</li>';
+									}
+									 areaList.html(areaCont);
+								}
+								
+                               }
+						},
+						error:function(err,etype,xhr){
+							console.log(err);
+							console.log(etype);
+							console.log(xhr);
+						}
+				});
+				
+			   
+				$("#areaBox").scrollTop(0);
+				$("#backUp").attr("onClick","intProvince();").show();
+			}
+			function selectC(shen_id,id){
+			   areaCont="";
+			    $.ajax({
+				        type:'POST',
+						url:'{:U("Check/area_choose")}',
+						dataType:"JSON",
+						data:{id:id},
+						success:function(e){
+							if(e.code==1){  			                        
+								var data_list=[];
+								var method_count=e.data;								    
+								if(method_count.length>0){
+									for (var c = 0; c < method_count.length; c++) {
+										var rowc=method_count[c];
+										areaCont+='<li onClick="selectD('+shen_id+','+id+','+rowc.id+');">'+rowc.name+'</li>';
+									}
+									areaList.html(areaCont);
+								}
+                               }
+						},
+						error:function(err,etype,xhr){
+							console.log(err);
+							console.log(etype);
+							console.log(xhr);
+						}
+				});
+				$("#areaBox").scrollTop(0);
+				$("#backUp").attr("onClick","selectP("+shen_id+");");
+			}
+			
+			function selectD(shen_id,shi_id,id){
+				
+				$.ajax({
+				        type:'POST',
+						url:'{:U("Check/area_choose_all")}',
+						dataType:"JSON",
+						data:{shen_id:shen_id,shi_id:shi_id,qu_id:id},
+						success:function(e){
+							if(e.code==1){  			                        
+								clockArea();
+								var method_count=e.data;								    
+								$("#expressArea").html(method_count);
+								$("#area_arr").val(id);
+                            }
+						},
+						error:function(err,etype,xhr){
+							console.log(err);
+							console.log(etype);
+							console.log(xhr);
+						}
+				});
+				
+			}
+			function clockArea(){
+				$("#areaMask").fadeOut();
+				$("#areaLayer").animate({"bottom":"-100%"});
+				intProvince();
+			}
+			//学校选择
+			function intSchool(){
+			    schoolCont='';
+			     $.ajax({
+				        type:'POST',
+						url:'{:U("Check/province_choose")}',
+						dataType:"JSON",
+						success:function(e){
+							if(e.code==1){  			                        
+								var method_count=e.data;							    
+								if(method_count.length>0){
+									for (var c = 0; c < method_count.length; c++) {
+										var rowc=method_count[c];
+										schoolCont+='<li onClick="selectS_city('+rowc.id+');">'+rowc.name+'</li>';
+									}
+									schoolList.html(schoolCont);
+								}
+                               }
+						},
+						error:function(err,etype,xhr){
+							console.log(err);
+							console.log(etype);
+							console.log(xhr);
+						}
+				});
+			    
+				$("#schoolBox").scrollTop(0);
+				$("#backUp_school").removeAttr("onClick").hide();
+			}
+			
+			function selectS_city(id){
+			    schoolCont='';
+				$.ajax({
+				        type:'POST',
+						url:'{:U("Check/city_choose")}',
+						dataType:"JSON",
+						data:{id:id},
+						success:function(e){
+							if(e.code==1){  			                        
+								var method_count=e.data;								    
+								if(method_count.length>0){
+									for (var c = 0; c < method_count.length; c++) {
+										var rowc=method_count[c];
+										schoolCont+='<li onClick="selectS('+rowc.id+');">'+rowc.name+'</li>';
+									}
+									 schoolList.html(schoolCont);
+								}
+								
+                               }
+						},
+						error:function(err,etype,xhr){
+							console.log(err);
+							console.log(etype);
+							console.log(xhr);
+						}
+				});
+				
+			   
+				$("#schoolBox").scrollTop(0);
+				$("#backUp_school").attr("onClick","intSchool();").show();
+			}
+			function selectS(id){
+			    schoolCont='';
+				$.ajax({
+				        type:'POST',
+						url:'{:U("Check/school_choose")}',
+						dataType:"JSON",
+						data:{id:id},
+						success:function(e){
+							if(e.code==1){  			                        
+								var data_list=[];
+								var method_count=e.data;								    
+								if(method_count.length>0){
+									for (var c = 0; c < method_count.length; c++) {
+										var rowc=method_count[c];
+										schoolCont+='<li onClick="selectSchool('+rowc.id+');">'+rowc.name+'</li>';
+									}
+									 schoolList.html(schoolCont);
+								}
+								
+                               }
+						},
+						error:function(err,etype,xhr){
+							console.log(err);
+							console.log(etype);
+							console.log(xhr);
+						}
+				});
+				
+			   
+				$("#schoolBox").scrollTop(0);
+				$("#backUp_school").attr("onClick","intSchool();").show();
+			}
+			function selectSchool(id){
+				
+				$.ajax({
+				        type:'POST',
+						url:'{:U("Check/sch_find")}',
+						dataType:"JSON",
+						data:{id:id},
+						success:function(e){
+							if(e.code==1){  
+                                clockSchool();							
+								$("#school").html(e.data);
+								$("#school_arr").val(id);;								    
+								
+                            }
+						},
+						error:function(err,etype,xhr){
+							console.log(err);
+							console.log(etype);
+							console.log(xhr);
+						}
+				});
+				
+			}
+			
+			function clockSchool(){
+				$("#schoolMask").fadeOut();
+				$("#schoolLayer").animate({"bottom":"-100%"});
+				intSchool();
+			}
+			
+		</script>
+	</body>
+</html>

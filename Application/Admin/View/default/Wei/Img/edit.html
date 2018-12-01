@@ -1,0 +1,125 @@
+<extend name="Public/edit"/>
+<block name="content">
+    <div class="ibox-content">
+        <form method="post" id='submitForm' name='submitForm' class="form-horizontal">                                
+        <if condition="!empty($entity['id'])">
+            <input type="hidden" name="u_id" id="id" value="{$entity.id}"/>
+        </if>
+            <div class="tabs-container">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true">基本信息</a></li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+
+                    <div id="tab-1" class="tab-pane active">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">名称</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="text" id="title" name="title"  value="{$entity.title}" placeholder="名称">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">图片链接</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="text" id="url" name="url"  value="{$entity.url}" placeholder="图片链接">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">图片</label>
+                                
+                                <div class="col-sm-2">
+                                    <div class="input-group">
+                                        <input type="hidden" class="form-control viewimages" id="img_url" name="img_url"  value="{$entity.img_url}"> 
+                                        <span class="input-group-btn"> 
+                                            <button type="button" id="thumb" class="btn btn-primary">上传图片</button>
+                                        </span>
+                                        <if condition="!empty($entity['img_url'])">
+                                            <a href="javascript:void(0)" id="delImg" class="btn btn-primary radius">删除图片</a>
+                                        </if>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="input-group img_show">
+                                        <if condition="!empty($entity['img_url'])">
+                                            <img class="img" style="height: 100px;" src="{$entity.img_url}">
+                                        </if>
+                                    </div>
+                                </div>
+                            </div> 
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">{$keywords}状态</label>
+                                <div class="col-sm-10">
+                                    <label class="checkbox-inline i-checks"><input class="table_radio" type='radio' name='status' value='1' {:($entity['status']=='1' )  ?'checked':''}/> 有效 </label>
+                                    <label class="checkbox-inline i-checks"><input class="table_radio" type='radio' name='status' value='2' {:($entity['status']=='2' ) ?'checked':''}/> 无效 </label>
+                                </div>
+                            </div>  
+
+                        </div>
+                        <div class="ibox-content">
+                            <div class="form-actions no-margin">
+                                <div class="next-prev-btn-container pull-right">
+                                    <a href="javascript:void(0)" id="submitbutton" class="btn btn-primary radius">提交</a>
+                                    <a href="javascript:void(0)"  id="cancelbutton" class="btn btn-default radius">关闭</a>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </div>   
+                                               
+                </div>
+            </div> 
+        </form>
+    </div>   
+</block>
+<block name="script">
+    <script type="text/javascript">
+         $(document).ready(function () {
+            var areaData={province:'{$entity.province}',city:'{$entity.city}',area:'{$entity.area}'};
+            AreaTool.init(areaData,call_area_change);
+            function call_area_change(){
+                $('[name="province"]').val(AreaTool.province);
+                $('[name="city"]').val(AreaTool.city);
+                $('[name="area"]').val(AreaTool.area);
+            }
+
+            layui.use('upload', function(){
+              var upload = layui.upload;
+               
+              //执行实例
+              var uploadInst = upload.render({
+                elem: '#thumb' //绑定元素
+                ,url: '/Admin/Base/Upload/uploadifythumb' //上传接口
+                ,done: function(res){
+                  if(res.code==0){
+                    $('input[name=img_url]').val(res.url);
+                    $(".img_show").append('<img class="img" style="height:100px;" src="'+res.url+'">');
+                    $('.input-group-btn').append('<a href="javascript:void(0)" id="delImg" class="btn btn-primary radius">删除图片</a>')
+                    layer.msg('图片上传成功',{time:1000,icon:1});
+                  }else{
+                    layer.msg('图片上传失败',{time:1000,icon:2});
+                  }
+                }
+                ,error: function(){
+                  //请求异常回调
+                }
+              });
+            });
+
+            $('.input-group').bind('click','delImg',function(){
+                $('img').remove();
+                $('#delImg').remove();
+                $('input[name=img_url]').val('');
+            });
+        });
+        //表单提交的地址
+        var subAjaxUrl="{:U('edit')}";
+        //表单验证的具体内容
+        var validate=new Array;
+        validate[0]=new Array;
+        validate[0][0]='#title';;
+        validate[0][1]='名称不能为空';
+    </script>
+</block>

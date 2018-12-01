@@ -1,0 +1,48 @@
+<extend name="Public/lists"/>
+<block name="content">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>订单处理列表</h5>
+        </div>
+        <div class="ibox-content">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th width="100">律师姓名</th>
+                            <th width="100">解答内容</th>
+                            <th width="100">所获评分</th>
+                            <th width="100">所得佣金</th>
+                            <th width="100">评论时间</th>
+                            <th width="100">佣金状态</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <foreach name="data" item="vo" > 
+                        <tr>
+                            <td>{$vo.user_name}</td>
+                            <td>
+                                <if condition="$vo.type eq 1">
+                                    {$vo.content}
+                                <else/>
+                                    <volist name="vo.path" id="vv">
+                                        <audio controls="controls">
+                                            <source src="{$vv.path}" type="audio/ogg">
+                                        </audio>
+                                    </volist>
+                                </if>
+                            </td>
+                            <td>{$vo.point}</td>
+                            <td>{$vo.get_money}</td>
+                            <td>{$vo.txt_comment_time}</td>
+                            <td>
+                                {$vo.txt_money_status}
+                            </td>
+                        </tr>
+                    </foreach>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</block>

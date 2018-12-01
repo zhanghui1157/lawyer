@@ -1,0 +1,76 @@
+<extend name="Public/lists"/>
+<block name="content">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>{$keywords}列表</h5>
+        </div>
+        <div class="ibox-content">
+			<form role="form" class="form-inline" method="get">
+				<div class="jq22" >
+					<div class="col-sm-4">
+						<input placeholder="输入订单编号查询" class="form-control"  id="trade_no" name="trade_no" value="{$search.trade_no}">
+					</div>
+				</div>
+				<input type="hidden" name="type" value="{$type}">
+				<button class="btn btn-primary" type="submit">搜索</button>     
+			</form>
+		</div>
+        <div class="ibox-content">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th width="100">{$keywords}编号</th>
+                            <th width="100">下单人姓名</th>
+                            <th width="100">下单人电话</th>
+                            <th width="100">套餐价格（元）</th>
+							<th width="100">订单编号</th>
+                            <th width="100">处理人数</th>
+                            <th width="100">下单时间</th>
+                            <th width="100">是否显示</th>
+                            <th width="100">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <foreach name="list" item="vo" > 
+                        <tr>
+                            <td>{$vo.id}</td>
+                            <td>{$vo.user_name}</td>
+                            <td>{$vo.phone}</td>
+                            <td>{$vo.combo_price}</td>
+							<td>{$vo.trade_no}</td>
+                            <td>{$vo.combo_number}</td>
+                            <td>{$vo.txt_create_time}</td>
+                            <td>
+                                <if condition="$vo.is_show eq 1">
+                                    <a href="{:U('showOrder',array('id'=>$vo['id']))}"  tip="确定要不显示此订单吗" class="ajaxsubmit ajaxdo">显示</a> 
+                                <else/>
+                                    <a href="{:U('showOrder',array('id'=>$vo['id']))}"  tip="确定要显示此订单吗" class="ajaxsubmit ajaxdo">不显示</a> 
+                                </if>
+                            </td>
+                            <td>
+                                <a href="javascript:void(0)" address="{:U('deal')}?id={$vo.id}"  tip="详情" onclick="winopen(this);" class="ajaxsubmit">详情</a> 
+                            </td>
+                        </tr>
+                    </foreach>
+                    </tbody>
+                </table>
+            </div>
+            <div class="text-center">
+                共计：{$count}条&nbsp;&nbsp;{$page}
+            </div>
+        </div>
+    </div>
+</block>
+<block name="script">
+    <script type="text/javascript">
+        $(document).ready(function () {          
+            $('form a').click(function(){
+                var status=$(this).attr('val');
+                $('input[name=status]').val(status);
+                $("#form1").submit();
+            });
+        });
+    </script>
+</block>       
+        

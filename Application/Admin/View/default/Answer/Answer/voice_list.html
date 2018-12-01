@@ -1,0 +1,62 @@
+<extend name="Public/lists"/>
+<block name="link">
+<link href="__PUBLIC__/plug/kindeditor/themes/default/default.css" rel="stylesheet" type="text/css" media="all"/>
+</block>
+<block name="content">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>问答回复内容</h5>
+        </div>
+        <div class="ibox-content">
+            <if condition="!empty($list)">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th width="100">编号</th>
+                                <th width="100">内容</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <foreach name="list" item="vo" > 
+                            <tr>
+                                <td>{$vo.id}</td>
+                                <td>
+                                    <audio controls="controls">
+                                        <source src="{$vo.path}" type="audio/ogg">
+                                    </audio>
+                                </td>
+                            </tr>
+                        </foreach>
+                        </tbody>
+                    </table>
+                </div>
+            <else/>
+                <textarea name="content" placeholder="编辑答案内容" class="content" style="width:700px;height:200px;visibility:hidden;">{$content}</textarea>
+            </if>
+        </div>
+    </div>
+</block>
+<block name="script">
+    <script charset="utf-8" src="__PUBLIC__/plug/kindeditor/kindeditor-min.js"></script>
+    <script charset="utf-8" src="__PUBLIC__/plug/kindeditor/lang/zh_CN.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {  
+            var editor;
+            KindEditor.ready(function(K) { 
+                editor = K.create('textarea[name="content"]', { 
+                    allowFileManager : true, 
+                    afterBlur:function(){this.sync();} 
+                }); 
+            });        
+            $('select').comboSelect();
+
+            $("#lawyer").change(function(){
+                $('#form1').submit();
+            });
+            $("#price").change(function(){
+                $('#form1').submit();
+            })
+        });
+    </script>
+</block> 

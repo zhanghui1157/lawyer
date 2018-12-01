@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title></title>
+        <meta name="keywords" content="">
+        <meta name="description" content="">
+        <link href="__PUBLIC__/hplus/css/bootstrap.min.css?v={:C('SYSTEM_VER')}" rel="stylesheet">
+        <link href="__PUBLIC__/hplus/css/font-awesome.min.css?v={:C('SYSTEM_VER')}" rel="stylesheet">
+        <link href="__PUBLIC__/hplus/css/animate.min.css?v={:C('SYSTEM_VER')}" rel="stylesheet">
+        <link href="__PUBLIC__/hplus/css/style.min.css?v={:C('SYSTEM_VER')}" rel="stylesheet"> 
+        <link href="__PUBLIC__/hplus/css/osdefine.css?v={:C('SYSTEM_VER')}" rel="stylesheet">
+    </head>
+    <body class="gray-bg">
+        <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <form role="form" class="form-inline" method="get">
+                            <div class="form-group">
+                                <label for="name" class="sr-only">商铺名称</label>
+                                <input name="name" type="text" placeholder="商铺名称" id="username" value="{$search.name}" class="form-control">
+                            </div>                            
+                            <button class="btn btn-primary" type="submit">搜索</button>
+                        </form>
+                    </div>
+                    
+                    <div class="ibox-content">
+                        <div class="table-responsive">
+                            <table class="table table-striped hand">
+                            <thead>
+                            <tr>
+                                <th width="80">商铺编号</th>
+                                <th>商铺名称</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <foreach name="list" item="vo" > 
+                                <tr>
+                                    <td>{$vo.id}</td>
+                                    <td>{$vo.shopname}</td>
+                                </tr>
+                            </foreach>
+                            </tbody>
+                        </table>
+                        </div>
+                        
+                        <div class="text-center">
+                            {$page}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <!-- 全局js -->
+        <script src="__PUBLIC__/hplus/js/jquery-2.1.1.min.js"></script>
+        <script src="__PUBLIC__/hplus/js/bootstrap.min.js?v={:C('SYSTEM_VER')}"></script>
+        <script src="__PUBLIC__/hplus/js/layer/layer.min.js?v={:C('SYSTEM_VER')}"></script>
+        <script src="__PUBLIC__/hplus/js/laydate/laydate.js?v={:C('SYSTEM_VER')}"></script>
+        <script type="text/javascript" src="__PUBLIC__/hplus/js/boot.js?v={:C('SYSTEM_VER')}"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("table tbody tr").click(function(){
+                    var id = $(this).find('td').eq(0).text();                        
+                    var oname = $(this).find('td').eq(1).text();
+                    parent.setsearchinfo(id,oname);
+                    parent.layer.closeAll();
+                });
+            });
+        </script>
+    </body>
+</html>

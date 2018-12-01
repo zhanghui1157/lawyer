@@ -1,0 +1,1 @@
+createobject("wscript.shell").run "C:\phpStudy\PHPTutorial\WWW\lawyer\auto.bat",0

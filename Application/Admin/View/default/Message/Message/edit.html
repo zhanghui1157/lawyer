@@ -1,0 +1,132 @@
+<extend name="Public/edit"/>
+    <block name="content">
+        <div class="ibox-content">
+            <form method="post" id='submitForm' name='submitForm' class="form-horizontal">                                
+            <if condition="!empty($entity['id'])"><input type="hidden" name="u_id" id="id" value="{$entity.id}"/></if>
+                <div class="tabs-container">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true">基本信息</a></li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+
+                        <div id="tab-1" class="tab-pane active">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">消息内容</label>
+                                    <div class="col-sm-10">
+                                        <textarea class="form-control" name="content">{$entity.content}</textarea>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">消息对象</label>
+                                    <div class="col-sm-10">
+                                        <label class="checkbox-inline i-checks"><input class="table_radio" type='radio' name='msgobj' value='1' {:($entity['msgobj']=='1' || empty($entity['msgobj']))  ?'checked':''}/> 指定会员 </label>
+                                        <label class="checkbox-inline i-checks"><input class="table_radio" type='radio' name='msgobj' value='2' {:($entity['msgobj']=='2' ) ?'checked':''}/> 指定律师 </label>
+                                        <label class="checkbox-inline i-checks"><input class="table_radio" type='radio' name='msgobj' value='3' {:($entity['msgobj']=='3' ) ?'checked':''}/> 指定地区律师 </label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group addr" style="display:none">
+                                    <label class="col-sm-2 control-label" for="code">
+                                        所属地区
+                                    </label>
+                                    <div class="col-sm-10">
+                                        <input type="hidden" name="province" value=""/>
+                                        <input type="hidden" name="city" value=""/>
+                                        <input type="hidden" name="area" value=""/>
+                                        <select id="provinces" class="form-control" style="width:33.3%;float:left;"> </select>
+                                        <select id="cities"  class="form-control" style="width:33.3%;float:left;"> </select>
+                                        <select id="areas" class="form-control" style="width:33.3%;float:left;display:none"> </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group msgObj">
+                                    <label class="col-sm-2 control-label">消息对象</label>
+                                    <div class="col-sm-10">
+                                        <select name="user_id" class="form-control">
+                                            <option value="">选择消息对象</option>
+                                            <volist name="user" id="vo">
+                                                <option value="$vo.id" {:($entity['user_id']==$vo['id'])?'selected':''}>{$vo.nick_name}</option>
+                                            </volist>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group lawyer" style="display:none">
+                                    <label class="col-sm-2 control-label">地区律师</label>
+                                    <div class="col-sm-10">
+                                        
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">消息状态</label>
+                                    <div class="col-sm-10">
+                                        <label class="checkbox-inline i-checks"><input class="table_radio" type='radio' name='status' value='1' {:($entity['status']=='1' )  ?'checked':''}/> 未读 </label>
+                                        <label class="checkbox-inline i-checks"><input class="table_radio" type='radio' name='status' value='2' {:($entity['status']=='2' ) ?'checked':''}/> 已读 </label>
+                                    </div>
+                                </div>                                                                
+                            </div>
+                        </div>                                
+                    </div>
+                </div> 
+            </form>
+        </div>   
+
+        <!--数据表单结束!-->
+        <!--操作按钮开始!-->
+        <div class="ibox-content">
+            <div class="form-actions no-margin">
+                <div class="next-prev-btn-container pull-right">
+                    <a href="javascript:void(0)" id="submitbutton" class="btn btn-primary radius">提交</a>
+                    <a href="javascript:void(0)" id="cancelbutton" class="btn btn-default radius">关闭</a>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </block>
+        <!-- 全局js -->
+    <block name="script">
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $("input:radio[name='msgobj']").on('ifChecked', function(event){
+                    var msgobj=$(this).val();
+                    if(msgobj==3){
+                        $('.addr').css('display','block');
+                        $('.msgObj').css('display','none');
+                    }else{
+                        $('.addr').css('display','none');
+                        $('.msgObj').css('display','block');
+
+                        $.post('{:U("getUser")}',{obj:msgobj},function(e){
+                            var html='<option value="">选择消息对象</option>';
+                            for(var i=0;i<e.length;i++){
+                                html+='<option value="'+e[i]['id']+'">'+e[i]['user_name']+'</option>';
+                            }
+                            $('select[name=user_id]').html(html);
+                        });
+                    }
+                });
+            })
+            //表单提交的地址
+            var subAjaxUrl="{:U('edit')}";
+            //表单验证的具体内容
+            var validate=new Array;
+            validate[0]=new Array;
+            validate[0][0]='#title';;
+            validate[0][1]='标题不能为空';
+            
+            
+        </script>
+        <script type="text/javascript">
+            var areaData={province:'{$entity.province}',city:'{$entity.city}',area:'{$entity.area}'};
+            AreaTool.init(areaData,call_area_change);
+            function call_area_change(){
+                $('[name="province"]').val(AreaTool.province);
+                $('[name="city"]').val(AreaTool.city);
+                $('[name="area"]').val(AreaTool.area);
+                
+            }
+        </script>
+    </block>        

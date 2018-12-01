@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>律师在哪儿</title>
+		<meta name="viewport" content="width=device-width, maximum-scale=1.0, initial-scale=1.0">
+		<link  href="__PUBLIC__/home/css/renzheng.css" rel="stylesheet"/>
+        <link  href="__PUBLIC__/home/css/style.css" rel="stylesheet">
+        <link href="__PUBLIC__/plug/kindeditor/themes/default/default.css" rel="stylesheet" type="text/css" media="all"/>
+		<script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/plug/layui/layui.js"></script>
+		<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.3.2.js"></script>
+		<style type="text/css">
+			.moneySelect p{width: 20%;float: left;}
+			.moneySelect p input{height: 16px;width: 16px;float: left;margin-top: 5px}
+			.content{width:100%;height:100px;border:none;outline: none;padding:10px 5px;margin-top:5px;height:300px}
+			.ke-toolbar{border:none;}
+		</style>
+
+	</head>
+	<body>
+		
+		<div class="box">
+	
+			<div class="boxcon">
+				<textarea name="title" placeholder="请输入问答标题，长度不要超过100字" style="width:100%;height:100px;border:none;outline: none;padding:10px 5px;">
+					<if condition="!empty($data['title'])">
+						{$data['title']}
+					</if>
+				</textarea>
+				<ul>
+					<li>
+						<a href="#">
+							<span><i class="icon iconfont">&#xe7ee;</i></span>问答类型：
+							<p id="expressArea">
+								<if condition="!empty($data['cate'])">
+									{$data['cate']}
+								<else/>
+									请选择
+								</if>
+							</p>
+							<input type="hidden" id="area_arr" name="first" value="{$data.first}">
+							<input type="hidden" name="second" value="{$data.second}">
+						</a>
+					</li>
+				</ul>	
+					<p >问答金额：</p>
+					<div class="moneySelect" style="float:none">
+						<volist name="money" id="vo">
+							<label>
+								<p>
+									<input type="radio" name="moneySelect" value="{$vo.id}" {:($vo['id']==$data['money'])?'checked':''}> {$vo.name}元
+								</p>
+							</label>
+						</volist>
+					</div>
+					<br>
+					<div style="float:none;margin-top:5px">编辑答案内容：</div>
+					<script id="container" name="content" type="text/plain">
+				        {$data.content}
+				    </script>
+				
+			</div>
+		</div>
+		
+
+		<section id="areaLayer" class="express-area-box">
+		<header>
+		<h3>选择类型</h3>
+		<a id="backUp" class="back" href="javascript:void(0)" title="返回"></a>
+		<a id="closeArea" class="close" href="javascript:void(0)" title="关闭"></a>
+		</header>
+		<article id="areaBox">
+		<ul id="areaList" class="area-list"></ul>
+		</article>
+		</section>
+		<div id="areaMask" class="mask"></div>
+		
+		<section id="schoolLayer" class="express-area-box">
+		
+		<article id="schoolBox">
+		<ul id="schoolList" class="area-list"></ul>
+		</article>
+		</section>
+		<div id="schoolMask" class="mask"></div>
+		
+		<div id="lv_info_div" style="display:none">
+			<div class="box shangchang lv_info"  style="border-top: none;">
+				<textarea id="lv_info2">
+				</textarea>
+			</div>
+		</div>
+		
+		<div id="self_info_div" style="display:none">
+			<div class="box shangchang lv_info"  style="border-top: none;">
+				<textarea id="self_info2">
+				</textarea>
+			</div>
+		</div>
+		<div class="intorenzheng" id="submit"><input type="button" value="提交" ></div>
+		<script type="text/javascript" charset="utf-8" src="__PUBLIC__/hplus/js/ueditor/ueditor.config.js?version=1.2.6"></script>
+        <script type="text/javascript" charset="utf-8" src="__PUBLIC__/hplus/js/ueditor/ueditor.all.min.js"> </script>
+        <script type="text/javascript" charset="utf-8" src="__PUBLIC__/hplus/js/ueditor/lang/zh-cn/zh-cn.js"></script>
+		<script type="text/javascript">
+			var expressArea,areaCont,schoolCont,areaList=$("#areaList"),schoolList=$("#schoolList"),areaTop=areaList.offset().top;
+		    $(document).ready(function(){
+			    var ue = UE.getEditor('container', {
+				    autoHeight: true,
+				    toolbars: [
+					    ['undo', 'redo', 'bold','indent','italic',]
+					]
+				});
+
+				//图片上传
+				 layui.use('upload', function(){
+					  var upload = layui.upload;
+					  //执行实例
+					  var uploadInst = upload.render({
+						elem: '#layer_headpic' //绑定元素
+						,url: '{:U("uploadifythumb")}' //上传接口
+						,done: function(res){
+						  if(res.code==1){
+							$('#headpic_url').val(res.data);
+							$("#layer_headpic").html('<div class="igbox"><img class="img" style="height:100px;" src="'+res.data+'"></div>');
+							$('#imgdel_head').css('display','block');
+							layer.msg('上传律师照片成功',{time:1000,icon:1});
+						  }else{
+							layer.msg('上传律师照片失败',{time:1000,icon:2});
+						  }
+						}
+						,error: function(){
+						  //请求异常回调
+						}
+					  });
+					  var uploadInst2 = upload.render({
+						elem: '#layer_cert' //绑定元素
+						,url: '{:U("uploadifythumb")}' //上传接口
+						,done: function(res){
+						  if(res.code==1){
+							$('#layer_cert_url').val(res.data);
+							$("#layer_cert").html('<div class="igbox"><img class="img" style="height:100px;" src="'+res.data+'"></div>');
+							$('#imgdel_cert').css('display','block');
+							layer.msg('上传律师职业证成功',{time:1000,icon:1});
+						  }else{
+							layer.msg('上传律师职业证失败',{time:1000,icon:2});
+						  }
+						}
+						,error: function(){
+						  //请求异常回调
+						}
+					  });
+				});
+
+				//职业地选择
+				intProvince();
+				$("#expressArea").click(function(){
+				  $("#areaMask").fadeIn();
+				  $("#areaLayer").animate({"bottom":0});
+				});
+				$("#areaMask, #closeArea").click(function(){clockArea();});
+				//学校选择
+				intSchool();
+				$("#school").click(function(){
+				  $("#schoolMask").fadeIn();
+				  $("#schoolLayer").animate({"bottom":0});
+				});
+				$("#schoolMask, #closeSchool").click(function(){clockSchool();});
+				//擅长领域：
+				$('#shan_chang').click(function(){
+				    var shan_id=$('#shan_id').val();
+					layer.open({
+						type: 2,
+						title: '擅长领域',
+						shadeClose: false,
+						shade: false,
+						maxmin: false, //开启最大化最小化按钮
+						area: ['100%', '100%'],
+						content: '{:U("answer/get_shanch")}?shan_id='+shan_id,
+						btn: ['确定'],
+						yes: function(index,layero){
+							//当点击‘确定’按钮的时候，获取弹出层返回的值
+							var shan_id = $(layero).find("iframe")[0].contentWindow.callbackdata();
+	                        if(shan_id){
+							    $.ajax({
+									url:"{:U('find_shanch')}",
+									type:"get",
+									dataType:"JSON",
+									data:{shan_id:shan_id},
+									success:function(e){
+										//var obj = JSON.parse(e); //由JSON字符串转换为JSON对象
+										if(e.code==1){
+											$('#shan_id').val(shan_id);
+											$('#shan_chang').html(e.data);
+										}else{
+											layer.alert(e.message) ;
+										}
+										
+										
+									},
+									error: function (jqXHR, textStatus, errorThrown) {
+										  alert(jqXHR.responseText);
+									},
+									
+									
+								});
+								
+								//最后关闭弹出层
+								layer.close(index);
+							}
+							
+						},
+						cancel: function(){
+							//右上角关闭回调
+						}
+					});
+					return false;
+				});
+
+				var callbackdata = function () {
+					var data = $('#lv_info').val(); 
+					return data;
+				}
+	
+				//提交  
+				$('#submit').click(function(){
+				    var title=$('textarea[name=title]').val();
+					var money=$('input[name=moneySelect]:checked').val();
+				    var content=ue.getContent();
+					var first=$('input[name=first]').val();
+					var second=$('input[name=second]').val();
+		
+					var user_id="{$user_id}";
+                    if(title==''){layer.alert('问答标题不能为空');return;}
+                    if(second==''){layer.alert('请选择问答类型');return;}
+                    if(content==''){layer.alert('问答答案不能为空');return;}
+	
+					$.ajax({
+							type:'POST',
+							url:'{:U("answer/sub")}',
+							dataType:"JSON",
+							data:{user_id:user_id,title:title,second:second,first:first,content:content,money:money},
+							success:function(e){
+							    layer.alert(e.msg);
+								if(e.code==1){  			                        
+									wx.miniProgram.getEnv(function (res) {
+									   if (res.miniprogram) {
+											wx.miniProgram.navigateTo({url: '/pages/mine/index'});
+									   }
+									});
+								}
+							},
+							error:function(err,etype,xhr){
+								console.log(err);
+								console.log(etype);
+								console.log(xhr);
+							}
+					});
+				})
+			})
+			//职业地选择
+			function intProvince(){
+			     areaCont='';
+			     $.ajax({
+				        type:'POST',
+						url:'{:U("answer/cate_choose")}',
+						dataType:"JSON",
+						data:{id:0},
+						success:function(e){
+							if(e.code==1){  			                        
+								var method_count=e.data;							    
+								if(method_count.length>0){
+									for (var c = 0; c < method_count.length; c++) {
+										var rowc=method_count[c];
+										areaCont+='<li onClick="selectP('+rowc.id+');">'+rowc.name+'</li>';
+									}
+									areaList.html(areaCont);
+								}
+                               }
+						},
+						error:function(err,etype,xhr){
+							console.log(err);
+							console.log(etype);
+							console.log(xhr);
+						}
+				});
+			    
+				$("#areaBox").scrollTop(0);
+				$("#backUp").removeAttr("onClick").hide();
+			}
+			
+			function selectP(id){
+			    areaCont='';
+				$.ajax({
+				        type:'POST',
+						url:'{:U("answer/cate_choose")}',
+						dataType:"JSON",
+						data:{id:id},
+						success:function(e){
+							if(e.code==1){  			                        
+								var data_list=[];
+								var method_count=e.data;								    
+								if(method_count.length>0){
+									for (var c = 0; c < method_count.length; c++) {
+										var rowc=method_count[c];
+										areaCont+='<li onClick="selectD('+id+','+rowc.id+');">'+rowc.name+'</li>';
+									}
+									 areaList.html(areaCont);
+								}
+								
+                               }
+						},
+						error:function(err,etype,xhr){
+							console.log(err);
+							console.log(etype);
+							console.log(xhr);
+						}
+				});
+				
+			   
+				$("#areaBox").scrollTop(0);
+				$("#backUp").attr("onClick","intProvince();").show();
+			}
+			
+			function selectD(one,two){
+				
+				$.ajax({
+				        type:'POST',
+						url:'{:U("answer/cate_choose_all")}',
+						dataType:"JSON",
+						data:{one:one,two:two},
+						success:function(e){
+							if(e.code==1){  			                        
+								clockArea();
+								var method_count=e.data;								    
+								$("#expressArea").html(method_count);
+								$('input[name=first]').val(one);
+								$('input[name=second]').val(two);
+                            }
+						},
+						error:function(err,etype,xhr){
+							console.log(err);
+							console.log(etype);
+							console.log(xhr);
+						}
+				});
+				
+			}
+			function clockArea(){
+				$("#areaMask").fadeOut();
+				$("#areaLayer").animate({"bottom":"-100%"});
+				intProvince();
+			}
+			//学校选择
+			function intSchool(){
+			    schoolCont='';
+			     $.ajax({
+				        type:'POST',
+						url:'{:U("answer/province_choose")}',
+						dataType:"JSON",
+						success:function(e){
+							if(e.code==1){  			                        
+								var method_count=e.data;							    
+								if(method_count.length>0){
+									for (var c = 0; c < method_count.length; c++) {
+										var rowc=method_count[c];
+										schoolCont+='<li onClick="selectS_city('+rowc.id+');">'+rowc.name+'</li>';
+									}
+									schoolList.html(schoolCont);
+								}
+                               }
+						},
+						error:function(err,etype,xhr){
+							console.log(err);
+							console.log(etype);
+							console.log(xhr);
+						}
+				});
+			    
+				$("#schoolBox").scrollTop(0);
+				$("#backUp_school").removeAttr("onClick").hide();
+			}
+			
+			function selectS_city(id){
+			    schoolCont='';
+				$.ajax({
+				        type:'POST',
+						url:'{:U("answer/city_choose")}',
+						dataType:"JSON",
+						data:{id:id},
+						success:function(e){
+							if(e.code==1){  			                        
+								var method_count=e.data;								    
+								if(method_count.length>0){
+									for (var c = 0; c < method_count.length; c++) {
+										var rowc=method_count[c];
+										schoolCont+='<li onClick="selectS('+rowc.id+');">'+rowc.name+'</li>';
+									}
+									 schoolList.html(schoolCont);
+								}
+								
+                               }
+						},
+						error:function(err,etype,xhr){
+							console.log(err);
+							console.log(etype);
+							console.log(xhr);
+						}
+				});
+				
+			   
+				$("#schoolBox").scrollTop(0);
+				$("#backUp_school").attr("onClick","intSchool();").show();
+			}
+			function selectS(id){
+			    schoolCont='';
+				$.ajax({
+				        type:'POST',
+						url:'{:U("answer/school_choose")}',
+						dataType:"JSON",
+						data:{id:id},
+						success:function(e){
+							if(e.code==1){  			                        
+								var data_list=[];
+								var method_count=e.data;								    
+								if(method_count.length>0){
+									for (var c = 0; c < method_count.length; c++) {
+										var rowc=method_count[c];
+										schoolCont+='<li onClick="selectSchool('+rowc.id+');">'+rowc.name+'</li>';
+									}
+									 schoolList.html(schoolCont);
+								}
+								
+                               }
+						},
+						error:function(err,etype,xhr){
+							console.log(err);
+							console.log(etype);
+							console.log(xhr);
+						}
+				});
+				
+			   
+				$("#schoolBox").scrollTop(0);
+				$("#backUp_school").attr("onClick","intSchool();").show();
+			}
+			function selectSchool(id){
+				
+				$.ajax({
+				        type:'POST',
+						url:'{:U("answer/sch_find")}',
+						dataType:"JSON",
+						data:{id:id},
+						success:function(e){
+							if(e.code==1){  
+                                clockSchool();							
+								$("#school").html(e.data);
+								$("#school_arr").val(id);;								    
+								
+                            }
+						},
+						error:function(err,etype,xhr){
+							console.log(err);
+							console.log(etype);
+							console.log(xhr);
+						}
+				});
+				
+			}
+			
+			function clockSchool(){
+				$("#schoolMask").fadeOut();
+				$("#schoolLayer").animate({"bottom":"-100%"});
+				intSchool();
+			}
+			
+		</script>
+	</body>
+</html>

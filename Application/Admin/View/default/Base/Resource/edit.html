@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title></title>
+        <meta name="keywords" content="">
+        <meta name="description" content="">
+        <link href="__PUBLIC__/hplus/css/bootstrap.min.css?v={:C('SYSTEM_VER')}" rel="stylesheet">
+        <link href="__PUBLIC__/hplus/css/font-awesome.min.css?v={:C('SYSTEM_VER')}" rel="stylesheet">
+        <link href="__PUBLIC__/hplus/css/animate.min.css?v={:C('SYSTEM_VER')}" rel="stylesheet">
+        <link href="__PUBLIC__/hplus/css/style.min.css?v={:C('SYSTEM_VER')}" rel="stylesheet"> 
+        <link href="__PUBLIC__/hplus/css/osdefine.css?v={:C('SYSTEM_VER')}" rel="stylesheet">
+        <link href="__PUBLIC__/hplus/css/blueimp-gallery.min.css?v={:C('SYSTEM_VER')}" rel="stylesheet">
+        <link href="__PUBLIC__/hplus/js/icheck/custom.css" rel="stylesheet">
+        <style>
+        .lightBoxGallery img {
+            margin: 5px;
+            width: 160px;
+        }
+        </style>
+    </head>
+    <body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <!--<div class="ibox-title">
+                        <h5>查看</h5>
+                        <div class="ibox-tools">
+                        </div>
+                    </div>!-->
+                    <div class="ibox-content">
+                        <form method="post" id='submitForm' name='submitForm' class="form-horizontal">
+                            <div class="tabs-container">
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true">基本信息</a></li>
+                                </ul>
+                                <div class="tab-content" id="myTabContent">                                
+                                    <div id="tab-1" class="tab-pane active">
+                                        <div class="panel-body">
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">所属分组</label>
+                                                <div class="col-sm-10">
+                                                    <select id="m" name="moudle" class="form-control">
+                                                        <foreach name="mlist" item="vo" >  
+                                                            <option value="{$key}" <eq name="key" value="$entity.moudle">selected</eq>>{$key}</option>
+                                                        </foreach>
+                                                    </select>
+                                                    <span class="help-block m-b-none"></span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">上级资源</label>
+                                                <div class="col-sm-10">
+                                                    <select id="pid" name="pid" class="form-control">
+                                                        <option value="0" <eq name="entity.pid" value="0">selected</eq>>一级分类</option>
+                                                        <foreach name="plist" item="vo" >  
+                                                            <option value="{$vo.id}" <eq name="vo.id" value="$entity.pid">selected</eq>>[{$vo.m}]{$vo.resourcename}</option>
+                                                        </foreach>
+                                                    </select>
+                                                    <span class="help-block m-b-none"></span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label" for="resourcename">
+                                                    资源名称
+                                                </label>
+                                                <div class="col-sm-10">
+                                                    <input type='hidden' name="id" id="id" value="{$entity.id}"/>
+                                                    <input class="form-control" type="text" id="resourcename" name="resourcename" placeholder="请输入资源名称" value='{$entity.resourcename}'/>
+                                                </div>
+                                            </div>                                          
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label" for="ico">
+                                                    图标(<i id='icoview' class="fa fa-{$entity.ico}"></i>)
+                                                </label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" name="ico" id="ico" class="form-control" placeholder=""  value='{$entity.ico}' />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label" for="c">
+                                                    控制器
+                                                </label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" name="action" id="c" class="form-control" placeholder=""  value='{$entity.action}' />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label" for="a">
+                                                    方法
+                                                </label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" name="method" id="a" class="form-control" placeholder=""  value='{$entity.method}' />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label" for="display">
+                                                    菜单
+                                                </label>
+                                                <div class="col-sm-10">
+                                                    <label class="checkbox-inline i-checks"><input type="checkbox" name="display" id="display" value="1"  <eq name="entity.display" value="1">checked</eq>> <i></i>是否为菜单</label>
+                                                </div>
+                                            </div>
+                            			    <div class="form-group">
+                                                <label class="col-sm-2 control-label" for="a">
+                                                   数排序
+                                                </label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" name="orderid" class="form-control" placeholder=""  value="{:(empty($entity['orderid'])?'255':$entity['orderid'])}" />
+                                                </div>
+                                            </div>
+                                             <div class="form-group">
+                                                <label class="col-sm-2 control-label" for="a">
+                                                   数据字典必填项：类型
+                                                </label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" name="type" id="a" class="form-control" placeholder=""  value='{$entity.type}' />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>                                                                
+                                </div>
+                            </div> 
+                        </form>
+                    </div>   
+                    <!--数据表单结束!-->
+                    <!--操作按钮开始!-->
+                    <div class="ibox-content">
+                        <div class="form-actions no-margin">
+                            <div class="next-prev-btn-container pull-right">
+                                <a href="javascript:void(0)" id="submitbutton" class="btn btn-primary radius">提交</a>
+                                <a href="javascript:void(0)"  id="cancelbutton" class="btn btn-default radius">关闭</a>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <!--操作按钮结束!-->
+                </div>
+            </div>
+        </div>
+    </div>
+        <!-- 全局js -->
+        <script src="__PUBLIC__/hplus/js/jquery-2.1.1.min.js"></script>
+        <script src="__PUBLIC__/hplus/js/bootstrap.min.js?v={:C('SYSTEM_VER')}"></script>
+        <script src="__PUBLIC__/hplus/js/layer/layer.min.js?v={:C('SYSTEM_VER')}"></script>
+        <script src="__PUBLIC__/hplus/js/laydate/laydate.js?v={:C('SYSTEM_VER')}"></script>
+        <script type="text/javascript" src="__PUBLIC__/hplus/js/jquery.blueimp-gallery.min.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/hplus/js/icheck/icheck.min.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/hplus/js/uploadify/jquery.uploadify.min.js"></script>
+        <script type="text/javascript" charset="utf-8" src="__PUBLIC__/hplus/js/ueditor/ueditor.config.js"></script>
+        <script type="text/javascript" charset="utf-8" src="__PUBLIC__/hplus/js/ueditor/ueditor.all.min.js"> </script>
+        <script type="text/javascript" charset="utf-8" src="__PUBLIC__/hplus/js/ueditor/lang/zh-cn/zh-cn.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/hplus/js/boot.js?v={:C('SYSTEM_VER')}"></script>
+         <script type="text/javascript">
+            $(document).ready(function () {
+                $(".i-checks").iCheck({checkboxClass:"icheckbox_square-green",radioClass:"iradio_square-green",});
+                $("#ico").click(function(){
+                    layer.open({
+                        type: 2,
+                        title: '选择图标',
+                        shadeClose: true,
+                        shade: 0.2,
+                        area: ['380px', '80%'],
+                        content:' /Admin/Base/SelectWin/ico.html'
+                    });
+                });
+                $("#cancelbutton").click(function () {
+                    parent.window.location.reload();
+                });
+                $("#submitbutton").click(function () {
+                    if (validateForm()) {
+                        function suc(data) {
+                            if (data.code == 1)
+                            {
+                                parent.layer.msg(data.msg, {icon:1,shadeClose: true,shade: 0.5,end:function(){$("#cancelbutton").click();}});
+                            } else {
+                                parent.layer.msg(data.msg, {icon:2,shadeClose: true,shade: 0.5,});
+                            }
+                        }
+                        function err() {
+                            parent.layer.msg('请求服务器失败', {icon:2,shadeClose: true,shade: 0.5,});
+                        }
+                        execute('/Admin/Base/Resource/edit', 1, $('#submitForm').serialize(), suc, err);  
+                    }
+                });
+            });
+            /** 表单验证  **/
+            function validateForm() {
+                if ($("#resourcename").val() == "") {
+                    parent.layer.msg('填写资源名称', {icon:2,shadeClose: true,shade: 0.5,});
+                    return false;
+                }
+                return true;
+            }
+            function setico(ico)
+            {
+                $('input[name=ico]').val(ico);
+                $('#icoview').attr('class','fa fa-'+ico);
+            }
+        </script>
+    </body>
+</html>

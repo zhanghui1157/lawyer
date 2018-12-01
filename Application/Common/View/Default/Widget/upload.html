@@ -1,0 +1,71 @@
+<!-- <link rel="stylesheet" href="__PUBLIC__/plug/layui/css/layui.css" media="all" /> -->
+<button type="button" class="layui-btn" id="file" style="float: left;">
+  <i class="layui-icon">&#xe67c;</i>上传附件
+</button>
+<if condition="$param.datafile eq ''">
+	<input class="form-control" type="text" name="desfile" value="没有附件" style="width: 50%;margin-left: 10px;height: 38px;line-height: 38px" readonly>
+<else/>
+	<input class="form-control" type="text" name="desfile" value="已有附件" style="width: 50%;margin-left: 10px;height: 38px;line-height: 38px" readonly>
+</if>
+
+<input class="form-control" type="hidden" name="{$param.filename}" value="{$param.datafile}">
+<input class="form-control" type="hidden" name="{$param.type}" value="{$param.datatype}" >
+
+<br>
+<if condition="$param.datafile eq ''">
+	<a href="javascript:void(0)" id="deletebutton" class="btn btn-primary radius" style="display: none">撤销上传</a>
+<else/>
+	<a href="javascript:void(0)" id="deletebutton" class="btn btn-primary radius" >撤销上传</a>
+</if>
+
+<script src="__PUBLIC__/hplus/js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/plug/layui/layui.js"></script>
+<script type="text/javascript">
+	$(document).ready(function () {
+    var filename="{$param.filename}"
+		var type="{$param.type}"
+        layui.use('upload', function(){
+          var upload = layui.upload;
+           
+          //执行实例
+          var uploadInst = upload.render({
+            elem: '#file' //绑定元素
+            ,url: "{:U('uploadFile')}" //上传接口
+            ,accept:'file'//文件类型
+            ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                layer.load(); //上传loading
+            }
+            ,done: function(res){
+              if(res.error==0){
+                setTimeout(function(){
+                    layer.closeAll('loading');
+                    $('input[name='+filename+']').val(res.url);
+                    $('input[name='+type+']').val(res.type);
+                    $('input[name=desfile]').val('附件已上传');
+                    $("#deletebutton").show();
+                    layer.msg('上传附件成功！', {icon:1});
+                },2000);
+              }else{
+                layer.msg('上传附件失败！', {icon:2,shadeClose: true,shade: 0.5,});
+              }
+            }
+            ,error: function(){
+              layer.msg('请求服务器失败', {icon:2,shadeClose: true,shade: 0.5,});
+            }
+          });
+        });
+        $("#deletebutton").click(function(){
+            var path=$('input[name='+filename+']').val();
+            if(path=='' || path==null){
+                layer.msg('没有需要撤销的文件');
+            }else{
+                $.post("{:U('deleteFile')}",{path:path},function(e){
+                    $("#deletebutton").css('display','none');
+                    $('input[name='+filename+']').val('');
+                    $('input[name=desfile]').val('无附件');
+                    layer.msg('上传的文件已经删除，请重新上传！',{icon: 1});
+                })
+            }
+        });
+    });  
+</script>

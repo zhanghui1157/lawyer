@@ -1,0 +1,166 @@
+<extend name="Public/edit"/>
+<block name="content">
+    <div class="ibox-content">
+        <form method="post" id='submitForm' name='submitForm' class="form-horizontal">                                
+        <if condition="!empty($entity['id'])">
+            <input type="hidden" name="id" id="id" value="{$entity.id}"/>
+        </if>
+            <div class="tabs-container">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true">基本信息</a></li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+
+                    <div id="tab-1" class="tab-pane active">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">标题</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="text" id="title" name="title"  value="{$entity.title}" placeholder="名称">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">图片</label>
+                                
+                                <div class="col-sm-2">
+                                    <div class="input-group">
+                                        <input type="hidden" class="form-control viewimages" id="img_url" name="img_url"  value="{$entity.img_url}"> 
+                                        <span class="input-group-btn"> 
+                                            <button type="button" id="thumb" class="btn btn-primary">上传图片</button>
+                                        </span>
+                                        <if condition="!empty($entity['img_url'])">
+                                            <a href="javascript:void(0)" id="delImg" class="btn btn-primary radius">删除图片</a>
+                                        </if>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="input-group img_show">
+                                        <if condition="!empty($entity['img_url'])">
+                                            <img class="img" style="height: 100px;" src="{$entity.img_url}">
+                                        </if>
+                                    </div>
+                                </div>
+                            </div> 
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="con">
+                                    内容
+                                </label>
+                                <div class="col-sm-10">
+                                    <textarea name="content" style="width:40%;height:200px;visibility:hidden;">{$entity.content}</textarea>
+                                </div>
+                            </div> 
+                            
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">是否关联律师</label>
+                                <div class="col-sm-10">
+                                    <label class="checkbox-inline i-checks"><input class="table_radio" type='radio' name='is_connect' value='1' {:($entity['is_connect']=='1' )  ?'checked':''}/> 是 </label>
+                                    <label class="checkbox-inline i-checks"><input class="table_radio" type='radio' name='is_connect' value='0' {:($entity['is_connect']=='0' ) ?'checked':''}/> 否 </label>
+                                </div>
+                            </div>  
+                            <if condition="$entity.is_connect eq 1">
+                                <div class="form-group is_connect" >
+                            <else/>
+                                <div class="form-group is_connect" style="display:none">
+                            </if>
+                                <label class="col-sm-2 control-label">选择关联的律师</label>
+                                <div class="col-sm-10">
+                                    <select name="lawyer" class="form-control">
+                                        <option value="">选择关联的律师</option>
+                                        <volist name="lawyer" id="vo">
+                                            <option value="{$vo.id}" {:($vo['id']==$entity['lawyer'])?'selected':''} >{$vo.user_name}</option>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div> 
+                            
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">设为首页轮播</label>
+                                <div class="col-sm-10">
+                                    <label class="checkbox-inline i-checks"><input class="table_radio" type='radio' name='status' value='1' {:($entity['status']=='1' )  ?'checked':''}/> 是 </label>
+                                    <label class="checkbox-inline i-checks"><input class="table_radio" type='radio' name='status' value='0' {:($entity['status']=='0' ) ?'checked':''}/> 否 </label>
+                                </div>
+                            </div>  
+
+                        </div>
+                        <div class="ibox-content">
+                            <div class="form-actions no-margin">
+                                <div class="next-prev-btn-container pull-right">
+                                    <a href="javascript:void(0)" id="submitbutton" class="btn btn-primary radius">提交</a>
+                                    <a href="javascript:void(0)"  id="cancelbutton" class="btn btn-default radius">关闭</a>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </div>   
+                                               
+                </div>
+            </div> 
+        </form>
+    </div>   
+</block>
+<block name="script">
+    <script type="text/javascript">
+         $(document).ready(function () {
+            var areaData={province:'{$entity.province}',city:'{$entity.city}',area:'{$entity.area}'};
+            AreaTool.init(areaData,call_area_change);
+            function call_area_change(){
+                $('[name="province"]').val(AreaTool.province);
+                $('[name="city"]').val(AreaTool.city);
+                $('[name="area"]').val(AreaTool.area);
+            }
+
+            var editor;
+            KindEditor.ready(function(K) { 
+                editor = K.create('textarea[name="content"]', { 
+                  allowFileManager : true, 
+                  afterBlur:function(){this.sync();} 
+                }); 
+            });
+
+            layui.use('upload', function(){
+              var upload = layui.upload;
+               
+              //执行实例
+              var uploadInst = upload.render({
+                elem: '#thumb' //绑定元素
+                ,url: '/Admin/Base/Upload/uploadifythumb' //上传接口
+                ,done: function(res){
+                  if(res.code==0){
+                    $('input[name=img_url]').val(res.url);
+                    $(".img_show").append('<img class="img" style="height:100px;" src="'+res.url+'">');
+                    $('.input-group-btn').append('<a href="javascript:void(0)" id="delImg" class="btn btn-primary radius">删除图片</a>')
+                    layer.msg('图片上传成功',{time:1000,icon:1});
+                  }else{
+                    layer.msg('图片上传失败',{time:1000,icon:2});
+                  }
+                }
+                ,error: function(){
+                  //请求异常回调
+                }
+              });
+            });
+
+            $('.input-group').bind('click','delImg',function(){
+                $('img').remove();
+                $('#delImg').remove();
+                $('input[name=img_url]').val('');
+            });
+
+            $("input:radio[name='is_connect']").on('ifChecked', function(event){
+                if($(this).val()==1){
+                    $('.is_connect').css('display','block');
+                }else{
+                    $('.is_connect').css('display','none');
+                }
+            });
+        });
+        //表单提交的地址
+        var subAjaxUrl="{:U('edit')}";
+        //表单验证的具体内容
+        var validate=new Array;
+        validate[0]=new Array;
+        validate[0][0]='#title';;
+        validate[0][1]='名称不能为空';
+    </script>
+</block>

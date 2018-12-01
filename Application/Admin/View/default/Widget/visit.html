@@ -1,0 +1,55 @@
+<div id="timemyChart2" style="height: 340px;"></div>
+<script src="__PUBLIC__/hplus/js/jquery-2.1.1.min.js"></script>
+<script src="__PUBLIC__/hplus/js/echarts.js"></script>
+
+<script>
+	var data1="{$array.data1}";
+	var data2="{$array.data2}";
+    console.table(data1);
+    return;
+    var  timemyChart2 = echarts.init(document.getElementById('timemyChart2'),'dark');
+      
+     timeoption2 = {
+        tooltip : {
+            trigger: 'axis'
+        },
+        legend: {
+            data:['访问量']
+        },
+        toolbox: {
+            show : true,
+            feature : {
+                mark : {show: true},
+                dataView : {show: true, readOnly: false},
+                magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+                restore : {show: true},
+                saveAsImage : {show: true}
+            }
+        },
+        calculable : true,
+        xAxis : [
+            {
+                type : 'category',
+                boundaryGap : false,
+                data : data1
+            }
+        ],
+        yAxis : [
+            {
+                type : 'value'
+            }
+        ],
+        series : [
+            {
+                name:'访问量',
+                type:'line',
+                stack: '总量',
+                data:data2
+            },
+           
+        ]
+    };
+
+
+    timemyChart2.setOption(timeoption2);
+    </script>

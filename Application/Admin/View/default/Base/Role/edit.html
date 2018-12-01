@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title></title>
+        <meta name="keywords" content="">
+        <meta name="description" content="">
+        <link href="__PUBLIC__/hplus/css/bootstrap.min.css?v={:C('SYSTEM_VER')}" rel="stylesheet">
+        <link href="__PUBLIC__/hplus/css/font-awesome.min.css?v={:C('SYSTEM_VER')}" rel="stylesheet">
+        <link href="__PUBLIC__/hplus/css/animate.min.css?v={:C('SYSTEM_VER')}" rel="stylesheet">
+        <link href="__PUBLIC__/hplus/css/style.min.css?v={:C('SYSTEM_VER')}" rel="stylesheet"> 
+        <link href="__PUBLIC__/hplus/css/osdefine.css?v={:C('SYSTEM_VER')}" rel="stylesheet">
+        <link href="__PUBLIC__/hplus/css/blueimp-gallery.min.css?v={:C('SYSTEM_VER')}" rel="stylesheet">
+        <link href="__PUBLIC__/hplus/js/icheck/custom.css" rel="stylesheet">
+        <style>
+        .lightBoxGallery img {
+            margin: 5px;
+            width: 160px;
+        }
+        </style>
+    </head>
+    <body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <!--<div class="ibox-title">
+                        <h5>查看</h5>
+                        <div class="ibox-tools">
+                        </div>
+                    </div>!-->
+                    <div class="ibox-content">
+                        <form method="post" id='submitForm' name='submitForm' class="form-horizontal">
+                        <div class="tabs-container">
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true">基本信息</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-2" aria-expanded="true">资源</a></li>
+                            </ul>
+                            <div class="tab-content" id="myTabContent">                                
+                                <div id="tab-1" class="tab-pane active">
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label" for="rolename">
+                                                角色名称
+                                            </label>
+                                            <div class="col-sm-10">
+                                                <input type="hidden" name="id" id="id" value="{$entity.id}"/>
+                                                <input class="form-control" type="text" id="rolename" name="rolename"  value="{$entity.rolename}" placeholder="角色名称">
+                                            </div>
+                                        </div> 
+                                        
+                                        <div class="form-group">
+                                                    <label class="col-sm-2 control-label">阅读基础分</label>
+                                                    <div class="col-sm-10">
+                                                       
+                                                        <select id="bpoint" name="bpoint" class="form-control">
+                                                                <option value="1" {:($entity['bpoint']==1 )?'selected':''}>1</option>  
+                                                                <option value="2" {:($entity['bpoint']==2 )?'selected':''}>2</option>   
+                                                                <option value="3" {:($entity['bpoint']==3 )?'selected':''}>3</option>   
+                                                                <option value="4" {:($entity['bpoint']==4 )?'selected':''}>4</option>   
+                                                                <option value="5" {:($entity['bpoint']==5 )?'selected':''}>5</option>   
+                                                                
+                                                         </select>
+                                                        
+                                                        <span class="help-block m-b-none"></span>
+                                                    </div>
+                                                </div>   
+                                       
+                                        
+                                       <div class="form-group">
+                                            <label class="col-sm-2 control-label" for="company">
+                                                单位名称
+                                            </label>
+                                            <div class="col-sm-10">
+                                                <input type="hidden" name="id" id="id" value="{$entity.id}"/>
+                                                <input class="form-control" type="text" id="company" name="company"  value="{$entity.company}" placeholder="单位名称">
+                                            </div>
+                                        </div>                               
+                                    </div>
+                                </div> 
+                                <div id="tab-2" class="tab-pane">
+                                    <div class="panel-body">
+                                        
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">资源</label>
+                                            <div class="col-sm-10">
+                                                <volist name=":getresource($key)" id="vo" >
+                                                <label class="checkbox-inline i-checks"><input type="checkbox" name="resource[]" id="resource_{$vo.id}" value="{$vo.id}"  {:in_array($vo['id'],$myresourcelist,true)?'checked':''}><eq name='vo.display' value='1'>(M)</eq>{$vo.resourcename}</label>
+                                                </volist>
+                                            </div>
+                                        </div>
+                                        
+                                        
+                                    </div>
+                                </div>                                                               
+                            </div>
+                        </div> 
+                        </form>
+                    </div>   
+                    <!--数据表单结束!-->
+                    <!--操作按钮开始!-->
+                    <div class="ibox-content">
+                        <div class="form-actions no-margin">
+                            <div class="next-prev-btn-container pull-right">
+                                <a href="javascript:void(0)" id="submitbutton" class="btn btn-primary radius">提交</a>
+                                <a href="javascript:void(0)"  id="cancelbutton" class="btn btn-default radius">关闭</a>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <!--操作按钮结束!-->
+                </div>
+            </div>
+        </div>
+    </div>
+        <!-- 全局js -->
+        <script src="__PUBLIC__/hplus/js/jquery-2.1.1.min.js"></script>
+        <script src="__PUBLIC__/hplus/js/bootstrap.min.js?v={:C('SYSTEM_VER')}"></script>
+        <script src="__PUBLIC__/hplus/js/layer/layer.min.js?v={:C('SYSTEM_VER')}"></script>
+        <script src="__PUBLIC__/hplus/js/laydate/laydate.js?v={:C('SYSTEM_VER')}"></script>
+        <script type="text/javascript" src="__PUBLIC__/hplus/js/jquery.blueimp-gallery.min.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/hplus/js/icheck/icheck.min.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/hplus/js/uploadify/jquery.uploadify.min.js"></script>
+        <script type="text/javascript" charset="utf-8" src="__PUBLIC__/hplus/js/ueditor/ueditor.config.js"></script>
+        <script type="text/javascript" charset="utf-8" src="__PUBLIC__/hplus/js/ueditor/ueditor.all.min.js"> </script>
+        <script type="text/javascript" charset="utf-8" src="__PUBLIC__/hplus/js/ueditor/lang/zh-cn/zh-cn.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/hplus/js/boot.js?v={:C('SYSTEM_VER')}"></script>
+         <script type="text/javascript">
+            $(document).ready(function () {
+                $(".i-checks").iCheck({checkboxClass:"icheckbox_square-green",radioClass:"iradio_square-green",});
+                $("#cancelbutton").click(function () {
+                    parent.window.location.reload();
+                });
+                $("#submitbutton").click(function () {
+                    if (validateForm()) {
+                        function suc(data) {
+                            if (data.code == 1)
+                            {
+                                parent.layer.msg(data.msg, {icon:1,shadeClose: true,shade: 0.5,end:function(){$("#cancelbutton").click();}});
+                            } else {
+                                parent.layer.msg(data.msg, {icon:2,shadeClose: true,shade: 0.5,});
+                            }
+                        }
+                        function err() {
+                            parent.layer.msg('请求服务器失败', {icon:2,shadeClose: true,shade: 0.5,});
+                        }
+                        execute('/Admin/Base/Role/edit.html', 1, $('#submitForm').serialize(), suc, err);                        
+                    }
+                });
+            });
+            /** 表单验证  **/
+            function validateForm() {
+                if ($("#rolename").val() == "") {
+                    parent.layer.msg('填写角色名称', {icon:2,shadeClose: true,shade: 0.5,});
+                    return false;
+                }
+                return true;
+            }
+        </script>
+    </body>
+</html>

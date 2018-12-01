@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title></title>
+        <meta name="keywords" content="">
+        <meta name="description" content="">
+        <link href="__PUBLIC__/hplus/css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
+        <link href="__PUBLIC__/hplus/css/font-awesome.min.css?v=4.3.0" rel="stylesheet">
+        <link href="__PUBLIC__/hplus/css/animate.min.css" rel="stylesheet">
+        <link href="__PUBLIC__/hplus/css/style.min.css?v=3.2.0" rel="stylesheet">
+    </head>
+    <body class="gray-bg">
+        <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>微信关键词自动回复</h5>
+                        <div class="ibox-tools">
+                            <a onclick="addKeyWords()" class="winopen" >添加关键字</a> 
+                        </div>
+                    </div>
+                   
+                    <div class="ibox-content">
+                        <div class="table-responsive">
+                        <form id="submitForm">
+                            <table class="table table-striped" id="wxnav_tb">
+                                <thead>
+                                    <tr>
+                                        <th width="100">关键词</th>
+                                        <th width="100">回复内容</th>
+                                        <th width="120">操作</th>
+                                    </tr>
+                                </thead>
+
+                                <?php $n=0;?>
+                                <volist name="list" id="vo">
+                                <?php $n++;?>
+                                    <tr class="wxrow" rel="{$n}">
+                                        <td class="tt" width="200px">
+                                            <input name="menu[{$n}][keywords]" class="form-control" value="{$vo[keywords]}"  required="true"/> 
+                                        </td>
+                                        <td style="" >
+                                            <textarea name="menu[{$n}][text]" class="form-control">{$vo.text}</textarea>
+                                        </td>
+                                        <td width="150px" style="text-align:center"> 
+                                            <a class="btn btn-default  radius" onclick="delKeywords({$n})">删除</a>
+                                        </td>
+                                    </tr>
+                                </volist>              
+                            </table>
+                        </form>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                            <div class="form-actions no-margin">
+                                <div class="next-prev-btn-container pull-right">
+                                    <a id="submitbutton" class="btn btn-primary radius">提交</a>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <!-- 全局js -->
+        <script src="__PUBLIC__/hplus/js/jquery-2.1.1.min.js"></script>
+        <script src="__PUBLIC__/hplus/js/bootstrap.min.js?v={:C('SYSTEM_VER')}"></script>
+        <script src="__PUBLIC__/hplus/js/layer/layer.min.js?v={:C('SYSTEM_VER')}"></script>
+        <script src="__PUBLIC__/hplus/js/laydate/laydate.js?v={:C('SYSTEM_VER')}"></script>
+        <script type="text/javascript" src="__PUBLIC__/hplus/js/boot.js?v={:C('SYSTEM_VER')}"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {   
+                $("#submitbutton").click(function () {
+                    if (validateForm()) {
+                        function suc(data) {
+                            if (data.code == 1)
+                            {
+                                layer.msg(data.msg, {time:1000,icon: 1},function(){location.reload()});
+                            } else {
+                                layer.msg(data.msg, {time:1000,icon: 1},function(){location.reload()});
+                            }
+                        }
+                        function err() {
+                            parent.layer.msg('请求服务器失败', {icon: 2, shadeClose: true, shade: 0.5, });
+                        }
+                        execute("{:U('lists')}", 1, $('#submitForm').serialize(), suc, err);
+                    }
+                });
+                function validateForm() {
+                    return true;
+                }
+            });
+                
+                function delKeywords(rid){
+                    $("[rel='"+rid+"']").remove();
+                }
+
+                function addKeyWords(){         
+                    var rows=$('.wxrow');
+                    var id=1;
+                    var html='';
+                    if(rows.length>0 && rows.length<3){
+                        var rel=rows.last().attr('rel');
+                        id=parseInt(rel)+1;
+                    }
+
+                    html+='<tr class="wxrow"  rel="'+id+'">';
+                        html+='<td style="" width="300px">';
+                            html+='<input name="menu['+id+'][keywords]" class="form-control" value=""  required="true" />';
+                        html+='</td>';
+                        html+='<td style=""> ';
+                            html+='<textarea name="menu['+id+'][text]" class="form-control">{$vo.text}</textarea>';
+                        html+='</td>';
+                        html+='<td width="150px" style="text-align:center"><a class="btn btn-default radius" onclick="delFirstMenu('+id+')">删除</a></td>';
+                    html+='</tr>';
+                    $('#wxnav_tb').append(html);
+                }
+                
+        </script>
+    </body>
+</html>

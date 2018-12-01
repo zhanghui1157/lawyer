@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title></title>
+        <meta name="keywords" content="">
+        <meta name="description" content="">
+        <link href="__PUBLIC__/hplus/css/bootstrap.min.css?v={:C('SYSTEM_VER')}" rel="stylesheet">
+        <link href="__PUBLIC__/hplus/css/font-awesome.min.css?v={:C('SYSTEM_VER')}" rel="stylesheet">
+        <link href="__PUBLIC__/hplus/css/animate.min.css?v={:C('SYSTEM_VER')}" rel="stylesheet">
+        <link href="__PUBLIC__/hplus/css/style.min.css?v={:C('SYSTEM_VER')}" rel="stylesheet"> 
+        <link href="__PUBLIC__/hplus/css/osdefine.css?v={:C('SYSTEM_VER')}" rel="stylesheet">
+        <link href="__PUBLIC__/hplus/css/blueimp-gallery.min.css?v={:C('SYSTEM_VER')}" rel="stylesheet">
+        <style>
+        .lightBoxGallery img {
+            margin: 5px;
+            width: 160px;
+        }
+        </style>
+    </head>
+    <body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <!--<div class="ibox-title">
+                        <h5>查看项目</h5>
+                        <div class="ibox-tools">
+                        </div>
+                    </div>!-->
+                    <div class="ibox-content">
+                        <form method="post" id='submitForm' name='submitForm' class="form-horizontal">
+                        <div class="tabs-container">
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true">基本信息</a></li>
+                            </ul>
+                            <div class="tab-content" id="myTabContent">
+                                
+                                <div id="tab-1" class="tab-pane active">
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">管理员名称</label>
+                                            <div class="col-sm-10">
+                                                <input type="hidden" name="id" id="id" value="{$entity.id}"/>
+                                                <input class="form-control" type="text" id="adminname" name="adminname"  value="{$entity.adminname}" placeholder="" readonly="">
+                                                <span class="help-block m-b-none"></span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">原密码</label>
+                                            <div class="col-sm-10">
+                                                <div class="input-group">
+                                                    <input type="password" class="form-control" id="oldpwd" name="oldpwd"  value="">
+                                                </div>
+                                                <span class="help-block m-b-none"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">新密码</label>
+                                            <div class="col-sm-10">
+                                                <div class="input-group">
+                                                    <input type="password" class="form-control" id="newpwd" name="newpwd"  value="">
+                                                </div>
+                                                <span class="help-block m-b-none"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">确认新密码</label>
+                                            <div class="col-sm-10">
+                                                <div class="input-group">
+                                                    <input type="password" class="form-control" id="newpwd2" name="newpwd2"  value="">
+                                                </div>
+                                                <span class="help-block m-b-none"></span>
+                                            </div>
+                                        </div>                                                                                          
+                                    </div>
+                                </div>                                
+                            </div>
+                        </div> 
+                        </form>
+                    </div>   
+                    <!--数据表单结束!-->
+                    <!--操作按钮开始!-->
+                    <div class="ibox-content">
+                        <div class="form-actions no-margin">
+                            <div class="next-prev-btn-container pull-right">
+                                <a href="javascript:void(0)" id="submitbutton" class="btn btn-primary radius">提交</a>
+                                <a href="javascript:void(0)"  id="cancelbutton" class="btn btn-default radius">关闭</a>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <!--操作按钮结束!-->
+                </div>
+            </div>
+        </div>
+    </div>
+        <!-- 全局js -->
+        <script src="__PUBLIC__/hplus/js/jquery-2.1.1.min.js"></script>
+        <script src="__PUBLIC__/hplus/js/bootstrap.min.js?v={:C('SYSTEM_VER')}"></script>
+        <script src="__PUBLIC__/hplus/js/layer/layer.min.js?v={:C('SYSTEM_VER')}"></script>
+        <script src="__PUBLIC__/hplus/js/laydate/laydate.js?v={:C('SYSTEM_VER')}"></script>
+        <script type="text/javascript" src="__PUBLIC__/hplus/js/jquery.blueimp-gallery.min.js"></script>
+        <script type="text/javascript" charset="utf-8" src="__PUBLIC__/hplus/js/ueditor/ueditor.config.js"></script>
+        <script type="text/javascript" charset="utf-8" src="__PUBLIC__/hplus/js/ueditor/ueditor.all.min.js"> </script>
+        <script type="text/javascript" charset="utf-8" src="__PUBLIC__/hplus/js/ueditor/lang/zh-cn/zh-cn.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/hplus/js/uploadify/jquery.uploadify.min.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/hplus/js/boot.js?v={:C('SYSTEM_VER')}"></script>
+         <script type="text/javascript">
+            $(document).ready(function () {                
+                $("#cancelbutton").click(function () {
+                    parent.window.location.reload();
+                });
+                $("#submitbutton").click(function () {
+                    if (validateForm()) {
+                        function suc(data) {
+                            if (data.code == 1)
+                            {
+                                parent.layer.msg(data.msg, {icon:1,shadeClose: true,shade: 0.5,end:function(){$("#cancelbutton").click();}});
+                            } else {
+                                parent.layer.msg(data.msg, {icon:2,shadeClose: true,shade: 0.5,});
+                            }
+                        }
+                        function err() {
+                            parent.layer.msg('请求服务器失败', {icon:2,shadeClose: true,shade: 0.5,});
+                        }
+                        execute('/Admin/Base/manager/modifypwd.html', 1, $('#submitForm').serialize(), suc, err);                        
+                    }
+                });
+            });
+            /** 表单验证  **/
+            function validateForm() {
+                if($('#oldpwd').val()=='')
+                {
+                    parent.layer.msg('请输入原始密码', {icon:2,shadeClose: true,shade: 0.5,});
+                    return false;
+                }
+                if($('#newpwd').val()=='')
+                {
+                    parent.layer.msg('请输入新密码', {icon:2,shadeClose: true,shade: 0.5,});
+                    return false;
+                }
+                if($('#newpwd').val()!=$('#newpwd2').val())
+                {
+                    parent.layer.msg('两次密码不一致', {icon:2,shadeClose: true,shade: 0.5,});
+                    return false;
+                }
+                return true;
+            }
+        </script>
+    </body>
+</html>

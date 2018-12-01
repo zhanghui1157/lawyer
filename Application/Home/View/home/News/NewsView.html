@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<meta content="width=device-width, initial-scale=1" name="viewport" />
+</head>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+			font-family: "微软雅黑";
+		}
+		body{ padding: 8px;}
+		h3{line-height:150%; border-bottom: 1px solid #dfdfdf; padding-bottom: 8px;}
+		.lvshi{height: 90px; margin-top: 12px;}
+		.lvshi div:nth-child(1){float:left; width: 16%}
+		.lvshi div:nth-child(2){float:left; width: 64%; text-align:inherit}
+		.lvshi div:nth-child(3){float:left; width: 20%; text-align: right}
+		.lvshi_img img{width:100%; border-radius:5px;  }
+		.lsname{margin-top:7px; font-size:14px; text-indent:20px; }
+		.comp{margin-top:5px; font-size:12px; text-indent:20px; color: #555 }
+		.lvshi_to img{height:15px; margin-top: 15px; margin-right: 10px;}
+		.Newscontent{color: #222; line-height: 170%; font-size: 15px; text-indent: 26px; clear: both}
+		.Newscontent img {width:100% }
+		
+	</style>
+<body>
+<h3>{$article.title}</h3>
+<div class="lvshi">
+		<div class="lvshi_img"><img src="img/lvshi.jpg" /></div>
+  <div class="lvshi_name">
+    <p class="lsname">妥成龙</p>
+    <p class="comp">银川慧科网络有限公司</p>
+  </div>
+	    <div class="lvshi_to"><img src="img/right2.png"/></div>
+</div>
+	<div class="Newscontent">{$article.content}</div>
+</body>
+</html>

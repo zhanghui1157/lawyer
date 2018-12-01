@@ -1,0 +1,515 @@
+[ 2018-11-15T14:17:42+08:00 ] 127.0.0.1 /index.php/Admin/Base/login
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000020s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000676s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001229s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001329s ]
+SQL: SHOW COLUMNS FROM `db_config` [ RunTime:0.0076s ]
+SQL: SELECT * FROM `db_config` WHERE `id` = 'default' LIMIT 1   [ RunTime:0.0008s ]
+NOTIC: [2] Missing argument 1 for Think\Controller::show(), called in D:\program\lawyer\Application\Admin\Controller\Base\LoginController.class.php on line 73 and defined D:\program\lawyer\TPCore\Library\Think\Controller.class.php 第 68 行.
+NOTIC: [8] Undefined variable: content D:\program\lawyer\TPCore\Library\Think\Controller.class.php 第 69 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000050s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000089s ]
+NOTIC: [8] Undefined variable: configexist D:\program\lawyer\Application\Runtime\Cache\Admin\710983141ed47d43663c32192db3b7fb.php 第 51 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.009447s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.009509s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000903s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000963s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002086s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002153s ]
+
+[ 2018-11-15T14:17:43+08:00 ] 127.0.0.1 /Admin/Base/Login/checkcode.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000309s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000588s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000640s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000870s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000949s ]
+
+[ 2018-11-15T14:17:53+08:00 ] 127.0.0.1 /Admin/Base/Login/index.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000016s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000442s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000446s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000498s ]
+SQL: SHOW COLUMNS FROM `db_manager` [ RunTime:0.0117s ]
+SQL: SELECT * FROM `db_manager` WHERE `adminname` = 'admin' LIMIT 1   [ RunTime:0.0007s ]
+SQL: SHOW COLUMNS FROM `db_manager_role` [ RunTime:0.0105s ]
+SQL: SELECT `role_id` FROM `db_manager_role` WHERE `manager_id` = 1  [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `db_role` [ RunTime:0.0096s ]
+SQL: SELECT * FROM `db_role` WHERE `id` IN ('1')  [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `db_manager_log` [ RunTime:0.0104s ]
+SQL: INSERT INTO `db_manager_log` (`manager_id`,`managername`,`addtime`,`ip`,`loginfo`) VALUES ('1','admin','1542262673','127.0.0.1','登录成功') [ RunTime:0.0007s ]
+
+[ 2018-11-15T14:17:53+08:00 ] 127.0.0.1 /Admin/Base/Index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000018s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000430s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000520s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000585s ]
+SQL: SHOW COLUMNS FROM `db_manager` [ RunTime:0.0101s ]
+SQL: SELECT resource.id as id,resource.moudle as m,resource.action as action,resource.method as method FROM db_manager manager,db_manager_role mrole,db_role_resource r_resource,db_resource resource WHERE ( manager.id=1 and manager.id = mrole.manager_id and mrole.role_id = r_resource.role_id and resource.id = r_resource.resource_id ) ORDER BY resource.id desc  [ RunTime:0.0042s ]
+SQL: SHOW COLUMNS FROM `db_manager` [ RunTime:0.0083s ]
+SQL: SELECT resource.id as id FROM db_manager manager,db_manager_role mrole,db_role_resource r_resource,db_resource resource WHERE ( manager.id=1 and manager.id = mrole.manager_id and mrole.role_id = r_resource.role_id and resource.id = r_resource.resource_id )  [ RunTime:0.0012s ]
+SQL: SHOW COLUMNS FROM `db_resource` [ RunTime:0.0083s ]
+SQL: SELECT `id`,`resourcename`,`moudle`,`action`,`method`,`link`,`ico`,`type` FROM `db_resource` WHERE `moudle` = 'Member' AND `pid` = 0 AND `display` = 1 AND `id` IN ('1','14','22','23','24','25','26','27','28','29','30','31','32','33','67','103','113','114','115','116','117','119','120','121','122','123','124','125','126','127','128','129','130','132','133','136','134') ORDER BY pid asc,orderid asc  [ RunTime:0.0011s ]
+NOTIC: [8] Undefined index: c D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 45 行.
+NOTIC: [8] Undefined index: a D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 45 行.
+NOTIC: [8] Undefined variable: user_auth D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 48 行.
+SQL: SELECT `id`,`resourcename`,`moudle`,`action`,`method`,`ico`,`link`,`type` FROM `db_resource` WHERE `pid` = 103 AND `display` = 1 AND `id` IN ('1','14','22','23','24','25','26','27','28','29','30','31','32','33','67','103','113','114','115','116','117','119','120','121','122','123','124','125','126','127','128','129','130','132','133','136','134') ORDER BY pid asc,orderid asc  [ RunTime:0.0011s ]
+NOTIC: [8] Undefined index: c D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 45 行.
+NOTIC: [8] Undefined index: a D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 45 行.
+NOTIC: [8] Undefined variable: user_auth D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 48 行.
+SQL: SELECT `id`,`resourcename`,`moudle`,`action`,`method`,`ico`,`link`,`type` FROM `db_resource` WHERE `pid` = 119 AND `display` = 1 AND `id` IN ('1','14','22','23','24','25','26','27','28','29','30','31','32','33','67','103','113','114','115','116','117','119','120','121','122','123','124','125','126','127','128','129','130','132','133','136','134') ORDER BY pid asc,orderid asc  [ RunTime:0.0006s ]
+SQL: SELECT `id`,`resourcename`,`moudle`,`action`,`method`,`link`,`ico`,`type` FROM `db_resource` WHERE `moudle` = 'Lawyer' AND `pid` = 0 AND `display` = 1 AND `id` IN ('1','14','22','23','24','25','26','27','28','29','30','31','32','33','67','103','113','114','115','116','117','119','120','121','122','123','124','125','126','127','128','129','130','132','133','136','134') ORDER BY pid asc,orderid asc  [ RunTime:0.0007s ]
+NOTIC: [8] Undefined index: c D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 45 行.
+NOTIC: [8] Undefined index: a D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 45 行.
+NOTIC: [8] Undefined variable: user_auth D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 48 行.
+SQL: SELECT `id`,`resourcename`,`moudle`,`action`,`method`,`ico`,`link`,`type` FROM `db_resource` WHERE `pid` = 113 AND `display` = 1 AND `id` IN ('1','14','22','23','24','25','26','27','28','29','30','31','32','33','67','103','113','114','115','116','117','119','120','121','122','123','124','125','126','127','128','129','130','132','133','136','134') ORDER BY pid asc,orderid asc  [ RunTime:0.0005s ]
+NOTIC: [8] Undefined index: c D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 45 行.
+NOTIC: [8] Undefined index: a D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 45 行.
+NOTIC: [8] Undefined variable: user_auth D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 48 行.
+SQL: SELECT `id`,`resourcename`,`moudle`,`action`,`method`,`ico`,`link`,`type` FROM `db_resource` WHERE `pid` = 120 AND `display` = 1 AND `id` IN ('1','14','22','23','24','25','26','27','28','29','30','31','32','33','67','103','113','114','115','116','117','119','120','121','122','123','124','125','126','127','128','129','130','132','133','136','134') ORDER BY pid asc,orderid asc  [ RunTime:0.0010s ]
+SQL: SELECT `id`,`resourcename`,`moudle`,`action`,`method`,`link`,`ico`,`type` FROM `db_resource` WHERE `moudle` = 'Answer' AND `pid` = 0 AND `display` = 1 AND `id` IN ('1','14','22','23','24','25','26','27','28','29','30','31','32','33','67','103','113','114','115','116','117','119','120','121','122','123','124','125','126','127','128','129','130','132','133','136','134') ORDER BY pid asc,orderid asc  [ RunTime:0.0007s ]
+NOTIC: [8] Undefined index: c D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 45 行.
+NOTIC: [8] Undefined index: a D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 45 行.
+NOTIC: [8] Undefined variable: user_auth D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 48 行.
+SQL: SELECT `id`,`resourcename`,`moudle`,`action`,`method`,`ico`,`link`,`type` FROM `db_resource` WHERE `pid` = 116 AND `display` = 1 AND `id` IN ('1','14','22','23','24','25','26','27','28','29','30','31','32','33','67','103','113','114','115','116','117','119','120','121','122','123','124','125','126','127','128','129','130','132','133','136','134') ORDER BY pid asc,orderid asc  [ RunTime:0.0005s ]
+SQL: SELECT `id`,`resourcename`,`moudle`,`action`,`method`,`link`,`ico`,`type` FROM `db_resource` WHERE `moudle` = 'Order' AND `pid` = 0 AND `display` = 1 AND `id` IN ('1','14','22','23','24','25','26','27','28','29','30','31','32','33','67','103','113','114','115','116','117','119','120','121','122','123','124','125','126','127','128','129','130','132','133','136','134') ORDER BY pid asc,orderid asc  [ RunTime:0.0005s ]
+NOTIC: [8] Undefined index: c D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 45 行.
+NOTIC: [8] Undefined index: a D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 45 行.
+NOTIC: [8] Undefined variable: user_auth D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 48 行.
+SQL: SELECT `id`,`resourcename`,`moudle`,`action`,`method`,`ico`,`link`,`type` FROM `db_resource` WHERE `pid` = 115 AND `display` = 1 AND `id` IN ('1','14','22','23','24','25','26','27','28','29','30','31','32','33','67','103','113','114','115','116','117','119','120','121','122','123','124','125','126','127','128','129','130','132','133','136','134') ORDER BY pid asc,orderid asc  [ RunTime:0.0005s ]
+NOTIC: [8] Undefined index: c D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 45 行.
+NOTIC: [8] Undefined index: a D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 45 行.
+NOTIC: [8] Undefined variable: user_auth D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 48 行.
+SQL: SELECT `id`,`resourcename`,`moudle`,`action`,`method`,`ico`,`link`,`type` FROM `db_resource` WHERE `pid` = 121 AND `display` = 1 AND `id` IN ('1','14','22','23','24','25','26','27','28','29','30','31','32','33','67','103','113','114','115','116','117','119','120','121','122','123','124','125','126','127','128','129','130','132','133','136','134') ORDER BY pid asc,orderid asc  [ RunTime:0.0005s ]
+NOTIC: [8] Undefined index: c D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 45 行.
+NOTIC: [8] Undefined index: a D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 45 行.
+NOTIC: [8] Undefined variable: user_auth D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 48 行.
+SQL: SELECT `id`,`resourcename`,`moudle`,`action`,`method`,`ico`,`link`,`type` FROM `db_resource` WHERE `pid` = 122 AND `display` = 1 AND `id` IN ('1','14','22','23','24','25','26','27','28','29','30','31','32','33','67','103','113','114','115','116','117','119','120','121','122','123','124','125','126','127','128','129','130','132','133','136','134') ORDER BY pid asc,orderid asc  [ RunTime:0.0005s ]
+SQL: SELECT `id`,`resourcename`,`moudle`,`action`,`method`,`link`,`ico`,`type` FROM `db_resource` WHERE `moudle` = 'Combo' AND `pid` = 0 AND `display` = 1 AND `id` IN ('1','14','22','23','24','25','26','27','28','29','30','31','32','33','67','103','113','114','115','116','117','119','120','121','122','123','124','125','126','127','128','129','130','132','133','136','134') ORDER BY pid asc,orderid asc  [ RunTime:0.0006s ]
+NOTIC: [8] Undefined index: c D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 45 行.
+NOTIC: [8] Undefined index: a D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 45 行.
+NOTIC: [8] Undefined variable: user_auth D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 48 行.
+SQL: SELECT `id`,`resourcename`,`moudle`,`action`,`method`,`ico`,`link`,`type` FROM `db_resource` WHERE `pid` = 114 AND `display` = 1 AND `id` IN ('1','14','22','23','24','25','26','27','28','29','30','31','32','33','67','103','113','114','115','116','117','119','120','121','122','123','124','125','126','127','128','129','130','132','133','136','134') ORDER BY pid asc,orderid asc  [ RunTime:0.0008s ]
+SQL: SELECT `id`,`resourcename`,`moudle`,`action`,`method`,`link`,`ico`,`type` FROM `db_resource` WHERE `moudle` = 'Money' AND `pid` = 0 AND `display` = 1 AND `id` IN ('1','14','22','23','24','25','26','27','28','29','30','31','32','33','67','103','113','114','115','116','117','119','120','121','122','123','124','125','126','127','128','129','130','132','133','136','134') ORDER BY pid asc,orderid asc  [ RunTime:0.0019s ]
+NOTIC: [8] Undefined index: c D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 45 行.
+NOTIC: [8] Undefined index: a D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 45 行.
+NOTIC: [8] Undefined variable: user_auth D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 48 行.
+SQL: SELECT `id`,`resourcename`,`moudle`,`action`,`method`,`ico`,`link`,`type` FROM `db_resource` WHERE `pid` = 123 AND `display` = 1 AND `id` IN ('1','14','22','23','24','25','26','27','28','29','30','31','32','33','67','103','113','114','115','116','117','119','120','121','122','123','124','125','126','127','128','129','130','132','133','136','134') ORDER BY pid asc,orderid asc  [ RunTime:0.0008s ]
+NOTIC: [8] Undefined index: c D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 45 行.
+NOTIC: [8] Undefined index: a D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 45 行.
+NOTIC: [8] Undefined variable: user_auth D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 48 行.
+SQL: SELECT `id`,`resourcename`,`moudle`,`action`,`method`,`ico`,`link`,`type` FROM `db_resource` WHERE `pid` = 124 AND `display` = 1 AND `id` IN ('1','14','22','23','24','25','26','27','28','29','30','31','32','33','67','103','113','114','115','116','117','119','120','121','122','123','124','125','126','127','128','129','130','132','133','136','134') ORDER BY pid asc,orderid asc  [ RunTime:0.0005s ]
+SQL: SELECT `id`,`resourcename`,`moudle`,`action`,`method`,`link`,`ico`,`type` FROM `db_resource` WHERE `moudle` = 'Message' AND `pid` = 0 AND `display` = 1 AND `id` IN ('1','14','22','23','24','25','26','27','28','29','30','31','32','33','67','103','113','114','115','116','117','119','120','121','122','123','124','125','126','127','128','129','130','132','133','136','134') ORDER BY pid asc,orderid asc  [ RunTime:0.0005s ]
+NOTIC: [8] Undefined index: c D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 45 行.
+NOTIC: [8] Undefined index: a D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 45 行.
+NOTIC: [8] Undefined variable: user_auth D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 48 行.
+SQL: SELECT `id`,`resourcename`,`moudle`,`action`,`method`,`ico`,`link`,`type` FROM `db_resource` WHERE `pid` = 132 AND `display` = 1 AND `id` IN ('1','14','22','23','24','25','26','27','28','29','30','31','32','33','67','103','113','114','115','116','117','119','120','121','122','123','124','125','126','127','128','129','130','132','133','136','134') ORDER BY pid asc,orderid asc  [ RunTime:0.0005s ]
+SQL: SELECT `id`,`resourcename`,`moudle`,`action`,`method`,`link`,`ico`,`type` FROM `db_resource` WHERE `moudle` = 'Wei' AND `pid` = 0 AND `display` = 1 AND `id` IN ('1','14','22','23','24','25','26','27','28','29','30','31','32','33','67','103','113','114','115','116','117','119','120','121','122','123','124','125','126','127','128','129','130','132','133','136','134') ORDER BY pid asc,orderid asc  [ RunTime:0.0006s ]
+NOTIC: [8] Undefined index: c D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 45 行.
+NOTIC: [8] Undefined index: a D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 45 行.
+NOTIC: [8] Undefined variable: user_auth D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 48 行.
+SQL: SELECT `id`,`resourcename`,`moudle`,`action`,`method`,`ico`,`link`,`type` FROM `db_resource` WHERE `pid` = 136 AND `display` = 1 AND `id` IN ('1','14','22','23','24','25','26','27','28','29','30','31','32','33','67','103','113','114','115','116','117','119','120','121','122','123','124','125','126','127','128','129','130','132','133','136','134') ORDER BY pid asc,orderid asc  [ RunTime:0.0006s ]
+SQL: SELECT `id`,`resourcename`,`moudle`,`action`,`method`,`link`,`ico`,`type` FROM `db_resource` WHERE `moudle` = 'Base' AND `pid` = 0 AND `display` = 1 AND `id` IN ('1','14','22','23','24','25','26','27','28','29','30','31','32','33','67','103','113','114','115','116','117','119','120','121','122','123','124','125','126','127','128','129','130','132','133','136','134') ORDER BY pid asc,orderid asc  [ RunTime:0.0007s ]
+NOTIC: [8] Undefined index: c D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 45 行.
+NOTIC: [8] Undefined index: a D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 45 行.
+NOTIC: [8] Undefined variable: user_auth D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 48 行.
+SQL: SELECT `id`,`resourcename`,`moudle`,`action`,`method`,`ico`,`link`,`type` FROM `db_resource` WHERE `pid` = 1 AND `display` = 1 AND `id` IN ('1','14','22','23','24','25','26','27','28','29','30','31','32','33','67','103','113','114','115','116','117','119','120','121','122','123','124','125','126','127','128','129','130','132','133','136','134') ORDER BY pid asc,orderid asc  [ RunTime:0.0005s ]
+NOTIC: [8] Undefined index: c D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 45 行.
+NOTIC: [8] Undefined index: a D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 45 行.
+NOTIC: [8] Undefined variable: user_auth D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 48 行.
+SQL: SELECT `id`,`resourcename`,`moudle`,`action`,`method`,`ico`,`link`,`type` FROM `db_resource` WHERE `pid` = 22 AND `display` = 1 AND `id` IN ('1','14','22','23','24','25','26','27','28','29','30','31','32','33','67','103','113','114','115','116','117','119','120','121','122','123','124','125','126','127','128','129','130','132','133','136','134') ORDER BY pid asc,orderid asc  [ RunTime:0.0006s ]
+NOTIC: [8] Undefined index: c D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 45 行.
+NOTIC: [8] Undefined index: a D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 45 行.
+NOTIC: [8] Undefined variable: user_auth D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 48 行.
+SQL: SELECT `id`,`resourcename`,`moudle`,`action`,`method`,`ico`,`link`,`type` FROM `db_resource` WHERE `pid` = 30 AND `display` = 1 AND `id` IN ('1','14','22','23','24','25','26','27','28','29','30','31','32','33','67','103','113','114','115','116','117','119','120','121','122','123','124','125','126','127','128','129','130','132','133','136','134') ORDER BY pid asc,orderid asc  [ RunTime:0.0005s ]
+NOTIC: [8] Undefined index: c D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 45 行.
+NOTIC: [8] Undefined index: a D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 45 行.
+NOTIC: [8] Undefined variable: user_auth D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php 第 48 行.
+SQL: SELECT `id`,`resourcename`,`moudle`,`action`,`method`,`ico`,`link`,`type` FROM `db_resource` WHERE `pid` = 67 AND `display` = 1 AND `id` IN ('1','14','22','23','24','25','26','27','28','29','30','31','32','33','67','103','113','114','115','116','117','119','120','121','122','123','124','125','126','127','128','129','130','132','133','136','134') ORDER BY pid asc,orderid asc  [ RunTime:0.0005s ]
+NOTIC: [2] Missing argument 1 for Think\Controller::show(), called in D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php on line 34 and defined D:\program\lawyer\TPCore\Library\Think\Controller.class.php 第 68 行.
+NOTIC: [8] Undefined variable: content D:\program\lawyer\TPCore\Library\Think\Controller.class.php 第 69 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000132s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000193s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.013201s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.013286s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000540s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000583s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000556s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000608s ]
+
+[ 2018-11-15T14:17:54+08:00 ] 127.0.0.1 /Admin/Base/Index/introduce
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000013s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000400s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000801s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000873s ]
+SQL: SHOW COLUMNS FROM `db_manager` [ RunTime:0.0140s ]
+SQL: SELECT resource.id as id,resource.moudle as m,resource.action as action,resource.method as method FROM db_manager manager,db_manager_role mrole,db_role_resource r_resource,db_resource resource WHERE ( manager.id=1 and manager.id = mrole.manager_id and mrole.role_id = r_resource.role_id and resource.id = r_resource.resource_id ) ORDER BY resource.id desc  [ RunTime:0.0016s ]
+SQL: SHOW COLUMNS FROM `db_user` [ RunTime:0.0080s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_user` WHERE `status` = 0 LIMIT 1   [ RunTime:0.0043s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_user` WHERE `status` = 2 LIMIT 1   [ RunTime:0.0041s ]
+SQL: SHOW COLUMNS FROM `db_answer` [ RunTime:0.0123s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_answer` LIMIT 1   [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `db_order` [ RunTime:0.0106s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_order` LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `db_pay_log` [ RunTime:0.0117s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_pay_log` LIMIT 1   [ RunTime:0.0006s ]
+NOTIC: [2] Missing argument 1 for Think\Controller::show(), called in D:\program\lawyer\Application\Admin\Controller\Base\IndexController.class.php on line 77 and defined D:\program\lawyer\TPCore\Library\Think\Controller.class.php 第 68 行.
+NOTIC: [8] Undefined variable: content D:\program\lawyer\TPCore\Library\Think\Controller.class.php 第 69 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000082s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000165s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.011883s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.011966s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000661s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000719s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000878s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000934s ]
+
+[ 2018-11-15T14:17:54+08:00 ] 127.0.0.1 /Admin/Base/skin-config.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000026s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000668s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001333s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001415s ]
+ERR: 无法加载控制器:Base/skin-config
+
+[ 2018-11-15T14:17:54+08:00 ] 127.0.0.1 /index.php/Admin/Base/Index/getNoticeData.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000018s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000499s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000554s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000618s ]
+SQL: SHOW COLUMNS FROM `db_manager` [ RunTime:0.0082s ]
+SQL: SELECT resource.id as id,resource.moudle as m,resource.action as action,resource.method as method FROM db_manager manager,db_manager_role mrole,db_role_resource r_resource,db_resource resource WHERE ( manager.id=1 and manager.id = mrole.manager_id and mrole.role_id = r_resource.role_id and resource.id = r_resource.resource_id ) ORDER BY resource.id desc  [ RunTime:0.0008s ]
+SQL: SHOW COLUMNS FROM `db_visit` [ RunTime:0.0107s ]
+SQL: SELECT `detail_time` FROM `db_visit` GROUP BY detail_time ORDER BY detail_time asc  [ RunTime:0.0031s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-07-19' LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-07-20' LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-07-21' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-07-22' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-07-23' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-07-24' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-07-25' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-07-26' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-07-27' LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-07-28' LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-07-29' LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-07-30' LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-07-31' LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-08-01' LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-08-02' LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-08-03' LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-08-04' LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-08-05' LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-08-06' LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-08-07' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-08-08' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-08-09' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-08-10' LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-08-11' LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-08-12' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-08-13' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-08-14' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-08-15' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-08-16' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-08-17' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-08-18' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-08-19' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-08-20' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-08-21' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-08-22' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-08-23' LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-08-24' LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-08-25' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-08-26' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-08-29' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-08-30' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-08-31' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-09-01' LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-09-02' LIMIT 1   [ RunTime:0.0011s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-09-03' LIMIT 1   [ RunTime:0.0009s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-09-04' LIMIT 1   [ RunTime:0.0008s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-09-05' LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-09-06' LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-09-07' LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-09-08' LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-09-09' LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-09-10' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-09-11' LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-09-12' LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-09-13' LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-09-14' LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-09-15' LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-09-16' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-09-17' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-09-19' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-09-20' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-09-23' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-09-25' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-09-26' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-09-27' LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-09-28' LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-09-29' LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-09-30' LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-10-01' LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-10-02' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-10-03' LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-10-04' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-10-05' LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-10-06' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-10-07' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-10-08' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-10-09' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-10-10' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-10-11' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-10-12' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-10-13' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-10-14' LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-10-15' LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-10-16' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-10-17' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-10-18' LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-10-19' LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-10-20' LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-10-21' LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-10-22' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-10-23' LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-10-24' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-10-25' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-10-26' LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-10-27' LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-10-28' LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-10-29' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-10-30' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-10-31' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-11-01' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-11-03' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_visit` WHERE `detail_time` = '2018-11-04' LIMIT 1   [ RunTime:0.0003s ]
+
+[ 2018-11-15T14:17:57+08:00 ] 127.0.0.1 /Admin/Answer/Answer/lists
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000025s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000827s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001149s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001257s ]
+SQL: SHOW COLUMNS FROM `db_manager` [ RunTime:0.0079s ]
+SQL: SELECT resource.id as id,resource.moudle as m,resource.action as action,resource.method as method FROM db_manager manager,db_manager_role mrole,db_role_resource r_resource,db_resource resource WHERE ( manager.id=1 and manager.id = mrole.manager_id and mrole.role_id = r_resource.role_id and resource.id = r_resource.resource_id ) ORDER BY resource.id desc  [ RunTime:0.0009s ]
+SQL: SHOW COLUMNS FROM `db_answer` [ RunTime:0.0088s ]
+SQL: SHOW COLUMNS FROM `db_user` [ RunTime:0.0072s ]
+SQL: SELECT `user_name`,`id` FROM `db_user` WHERE `status` <> 0 GROUP BY user_name  [ RunTime:0.0013s ]
+SQL: SHOW COLUMNS FROM `db_dictionary` [ RunTime:0.0100s ]
+SQL: SELECT * FROM `db_dictionary` WHERE `type` = 1 AND `level` = 1 ORDER BY id asc,listorder asc  [ RunTime:0.0006s ]
+SQL: SELECT * FROM `db_dictionary` WHERE `type` = 1 AND `pid` = 2 ORDER BY id desc,listorder asc  [ RunTime:0.0003s ]
+SQL: SELECT * FROM `db_dictionary` WHERE `type` = 1 AND `pid` = 3 ORDER BY id desc,listorder asc  [ RunTime:0.0003s ]
+SQL: SELECT * FROM `db_dictionary` WHERE `type` = 1 AND `pid` = 4 ORDER BY id desc,listorder asc  [ RunTime:0.0005s ]
+SQL: SELECT * FROM `db_dictionary` WHERE `type` = 1 AND `pid` = 5 ORDER BY id desc,listorder asc  [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_answer` WHERE `status` <> 0 LIMIT 1   [ RunTime:0.0002s ]
+SQL: SELECT * FROM `db_answer` WHERE `status` <> 0 ORDER BY id desc LIMIT 0,20   [ RunTime:0.0030s ]
+SQL: SELECT `name` FROM `db_dictionary` WHERE `id` = 4 LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT `user_name` FROM `db_user` WHERE `id` = 37 LIMIT 1   [ RunTime:0.0002s ]
+SQL: SELECT `name` FROM `db_dictionary` WHERE `id` = 4 LIMIT 1   [ RunTime:0.0002s ]
+SQL: SELECT `user_name` FROM `db_user` WHERE `id` = 37 LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT `name` FROM `db_dictionary` WHERE `id` = 4 LIMIT 1   [ RunTime:0.0002s ]
+SQL: SELECT `user_name` FROM `db_user` WHERE `id` = 37 LIMIT 1   [ RunTime:0.0002s ]
+NOTIC: [2] Missing argument 1 for Think\Controller::show(), called in D:\program\lawyer\Application\Admin\Controller\Answer\AnswerController.class.php on line 33 and defined D:\program\lawyer\TPCore\Library\Think\Controller.class.php 第 68 行.
+NOTIC: [8] Undefined variable: content D:\program\lawyer\TPCore\Library\Think\Controller.class.php 第 69 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000056s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000096s ]
+NOTIC: [8] Undefined variable: keyword D:\program\lawyer\Application\Runtime\Cache\Admin\8b8be436207878b4a6bb2a226ea4f81c.php 第 24 行.
+NOTIC: [8] Undefined index: lawyer D:\program\lawyer\Application\Runtime\Cache\Admin\8b8be436207878b4a6bb2a226ea4f81c.php 第 31 行.
+NOTIC: [8] Undefined index: lawyer D:\program\lawyer\Application\Runtime\Cache\Admin\8b8be436207878b4a6bb2a226ea4f81c.php 第 31 行.
+NOTIC: [8] Undefined index: lawyer D:\program\lawyer\Application\Runtime\Cache\Admin\8b8be436207878b4a6bb2a226ea4f81c.php 第 31 行.
+NOTIC: [8] Undefined index: lawyer D:\program\lawyer\Application\Runtime\Cache\Admin\8b8be436207878b4a6bb2a226ea4f81c.php 第 31 行.
+NOTIC: [8] Undefined index: lawyer D:\program\lawyer\Application\Runtime\Cache\Admin\8b8be436207878b4a6bb2a226ea4f81c.php 第 31 行.
+NOTIC: [8] Undefined index: lawyer D:\program\lawyer\Application\Runtime\Cache\Admin\8b8be436207878b4a6bb2a226ea4f81c.php 第 31 行.
+NOTIC: [8] Undefined index: lawyer D:\program\lawyer\Application\Runtime\Cache\Admin\8b8be436207878b4a6bb2a226ea4f81c.php 第 31 行.
+NOTIC: [8] Undefined index: lawyer D:\program\lawyer\Application\Runtime\Cache\Admin\8b8be436207878b4a6bb2a226ea4f81c.php 第 31 行.
+NOTIC: [8] Undefined index: lawyer D:\program\lawyer\Application\Runtime\Cache\Admin\8b8be436207878b4a6bb2a226ea4f81c.php 第 31 行.
+NOTIC: [8] Undefined index: price D:\program\lawyer\Application\Runtime\Cache\Admin\8b8be436207878b4a6bb2a226ea4f81c.php 第 38 行.
+NOTIC: [8] Undefined index: price D:\program\lawyer\Application\Runtime\Cache\Admin\8b8be436207878b4a6bb2a226ea4f81c.php 第 38 行.
+NOTIC: [8] Undefined index: price D:\program\lawyer\Application\Runtime\Cache\Admin\8b8be436207878b4a6bb2a226ea4f81c.php 第 38 行.
+NOTIC: [8] Undefined index: price D:\program\lawyer\Application\Runtime\Cache\Admin\8b8be436207878b4a6bb2a226ea4f81c.php 第 38 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.012263s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.012336s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000716s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000746s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000839s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000885s ]
+
+[ 2018-11-15T14:19:32+08:00 ] 127.0.0.1 /index.php/Admin/Answer/Answer/changeStatus/id/5/status/1.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000016s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000484s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001187s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001262s ]
+SQL: SHOW COLUMNS FROM `db_manager` [ RunTime:0.0072s ]
+SQL: SELECT resource.id as id,resource.moudle as m,resource.action as action,resource.method as method FROM db_manager manager,db_manager_role mrole,db_role_resource r_resource,db_resource resource WHERE ( manager.id=1 and manager.id = mrole.manager_id and mrole.role_id = r_resource.role_id and resource.id = r_resource.resource_id ) ORDER BY resource.id desc  [ RunTime:0.0011s ]
+SQL: SHOW COLUMNS FROM `db_answer` [ RunTime:0.0065s ]
+SQL: UPDATE `db_answer` SET `status`='2' WHERE `id` = 5 [ RunTime:0.0008s ]
+SQL: SHOW COLUMNS FROM `db_manager_log` [ RunTime:0.0067s ]
+SQL: INSERT INTO `db_manager_log` (`manager_id`,`managername`,`addtime`,`ip`,`loginfo`) VALUES ('1','admin','1542262772','127.0.0.1','改变id为 \"5\" 的问答状态成功') [ RunTime:0.0007s ]
+
+[ 2018-11-15T14:19:33+08:00 ] 127.0.0.1 /Admin/Answer/Answer/lists
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000017s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000551s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001202s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001274s ]
+SQL: SHOW COLUMNS FROM `db_manager` [ RunTime:0.0114s ]
+SQL: SELECT resource.id as id,resource.moudle as m,resource.action as action,resource.method as method FROM db_manager manager,db_manager_role mrole,db_role_resource r_resource,db_resource resource WHERE ( manager.id=1 and manager.id = mrole.manager_id and mrole.role_id = r_resource.role_id and resource.id = r_resource.resource_id ) ORDER BY resource.id desc  [ RunTime:0.0018s ]
+SQL: SHOW COLUMNS FROM `db_answer` [ RunTime:0.0112s ]
+SQL: SHOW COLUMNS FROM `db_user` [ RunTime:0.0100s ]
+SQL: SELECT `user_name`,`id` FROM `db_user` WHERE `status` <> 0 GROUP BY user_name  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `db_dictionary` [ RunTime:0.0085s ]
+SQL: SELECT * FROM `db_dictionary` WHERE `type` = 1 AND `level` = 1 ORDER BY id asc,listorder asc  [ RunTime:0.0008s ]
+SQL: SELECT * FROM `db_dictionary` WHERE `type` = 1 AND `pid` = 2 ORDER BY id desc,listorder asc  [ RunTime:0.0005s ]
+SQL: SELECT * FROM `db_dictionary` WHERE `type` = 1 AND `pid` = 3 ORDER BY id desc,listorder asc  [ RunTime:0.0009s ]
+SQL: SELECT * FROM `db_dictionary` WHERE `type` = 1 AND `pid` = 4 ORDER BY id desc,listorder asc  [ RunTime:0.0009s ]
+SQL: SELECT * FROM `db_dictionary` WHERE `type` = 1 AND `pid` = 5 ORDER BY id desc,listorder asc  [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_answer` WHERE `status` <> 0 LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT * FROM `db_answer` WHERE `status` <> 0 ORDER BY id desc LIMIT 0,20   [ RunTime:0.0020s ]
+SQL: SELECT `name` FROM `db_dictionary` WHERE `id` = 4 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT `user_name` FROM `db_user` WHERE `id` = 37 LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT `name` FROM `db_dictionary` WHERE `id` = 4 LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT `user_name` FROM `db_user` WHERE `id` = 37 LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT `name` FROM `db_dictionary` WHERE `id` = 4 LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT `user_name` FROM `db_user` WHERE `id` = 37 LIMIT 1   [ RunTime:0.0003s ]
+NOTIC: [2] Missing argument 1 for Think\Controller::show(), called in D:\program\lawyer\Application\Admin\Controller\Answer\AnswerController.class.php on line 33 and defined D:\program\lawyer\TPCore\Library\Think\Controller.class.php 第 68 行.
+NOTIC: [8] Undefined variable: content D:\program\lawyer\TPCore\Library\Think\Controller.class.php 第 69 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000077s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000133s ]
+NOTIC: [8] Undefined variable: keyword D:\program\lawyer\Application\Runtime\Cache\Admin\8b8be436207878b4a6bb2a226ea4f81c.php 第 24 行.
+NOTIC: [8] Undefined index: lawyer D:\program\lawyer\Application\Runtime\Cache\Admin\8b8be436207878b4a6bb2a226ea4f81c.php 第 31 行.
+NOTIC: [8] Undefined index: lawyer D:\program\lawyer\Application\Runtime\Cache\Admin\8b8be436207878b4a6bb2a226ea4f81c.php 第 31 行.
+NOTIC: [8] Undefined index: lawyer D:\program\lawyer\Application\Runtime\Cache\Admin\8b8be436207878b4a6bb2a226ea4f81c.php 第 31 行.
+NOTIC: [8] Undefined index: lawyer D:\program\lawyer\Application\Runtime\Cache\Admin\8b8be436207878b4a6bb2a226ea4f81c.php 第 31 行.
+NOTIC: [8] Undefined index: lawyer D:\program\lawyer\Application\Runtime\Cache\Admin\8b8be436207878b4a6bb2a226ea4f81c.php 第 31 行.
+NOTIC: [8] Undefined index: lawyer D:\program\lawyer\Application\Runtime\Cache\Admin\8b8be436207878b4a6bb2a226ea4f81c.php 第 31 行.
+NOTIC: [8] Undefined index: lawyer D:\program\lawyer\Application\Runtime\Cache\Admin\8b8be436207878b4a6bb2a226ea4f81c.php 第 31 行.
+NOTIC: [8] Undefined index: lawyer D:\program\lawyer\Application\Runtime\Cache\Admin\8b8be436207878b4a6bb2a226ea4f81c.php 第 31 行.
+NOTIC: [8] Undefined index: lawyer D:\program\lawyer\Application\Runtime\Cache\Admin\8b8be436207878b4a6bb2a226ea4f81c.php 第 31 行.
+NOTIC: [8] Undefined index: price D:\program\lawyer\Application\Runtime\Cache\Admin\8b8be436207878b4a6bb2a226ea4f81c.php 第 38 行.
+NOTIC: [8] Undefined index: price D:\program\lawyer\Application\Runtime\Cache\Admin\8b8be436207878b4a6bb2a226ea4f81c.php 第 38 行.
+NOTIC: [8] Undefined index: price D:\program\lawyer\Application\Runtime\Cache\Admin\8b8be436207878b4a6bb2a226ea4f81c.php 第 38 行.
+NOTIC: [8] Undefined index: price D:\program\lawyer\Application\Runtime\Cache\Admin\8b8be436207878b4a6bb2a226ea4f81c.php 第 38 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.014363s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.014425s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000837s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000872s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001253s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001321s ]
+
+[ 2018-11-15T14:19:35+08:00 ] 127.0.0.1 /Admin/Answer/Answer/lists
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000312s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000803s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000874s ]
+SQL: SHOW COLUMNS FROM `db_manager` [ RunTime:0.0083s ]
+SQL: SELECT resource.id as id,resource.moudle as m,resource.action as action,resource.method as method FROM db_manager manager,db_manager_role mrole,db_role_resource r_resource,db_resource resource WHERE ( manager.id=1 and manager.id = mrole.manager_id and mrole.role_id = r_resource.role_id and resource.id = r_resource.resource_id ) ORDER BY resource.id desc  [ RunTime:0.0008s ]
+SQL: SHOW COLUMNS FROM `db_answer` [ RunTime:0.0068s ]
+SQL: SHOW COLUMNS FROM `db_user` [ RunTime:0.0088s ]
+SQL: SELECT `user_name`,`id` FROM `db_user` WHERE `status` <> 0 GROUP BY user_name  [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `db_dictionary` [ RunTime:0.0061s ]
+SQL: SELECT * FROM `db_dictionary` WHERE `type` = 1 AND `level` = 1 ORDER BY id asc,listorder asc  [ RunTime:0.0008s ]
+SQL: SELECT * FROM `db_dictionary` WHERE `type` = 1 AND `pid` = 2 ORDER BY id desc,listorder asc  [ RunTime:0.0008s ]
+SQL: SELECT * FROM `db_dictionary` WHERE `type` = 1 AND `pid` = 3 ORDER BY id desc,listorder asc  [ RunTime:0.0008s ]
+SQL: SELECT * FROM `db_dictionary` WHERE `type` = 1 AND `pid` = 4 ORDER BY id desc,listorder asc  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `db_dictionary` WHERE `type` = 1 AND `pid` = 5 ORDER BY id desc,listorder asc  [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `db_answer` WHERE `status` <> 0 LIMIT 1   [ RunTime:0.0025s ]
+SQL: SELECT * FROM `db_answer` WHERE `status` <> 0 ORDER BY id desc LIMIT 0,20   [ RunTime:0.0012s ]
+SQL: SELECT `name` FROM `db_dictionary` WHERE `id` = 4 LIMIT 1   [ RunTime:0.0002s ]
+SQL: SELECT `user_name` FROM `db_user` WHERE `id` = 37 LIMIT 1   [ RunTime:0.0002s ]
+SQL: SELECT `name` FROM `db_dictionary` WHERE `id` = 4 LIMIT 1   [ RunTime:0.0002s ]
+SQL: SELECT `user_name` FROM `db_user` WHERE `id` = 37 LIMIT 1   [ RunTime:0.0002s ]
+SQL: SELECT `name` FROM `db_dictionary` WHERE `id` = 4 LIMIT 1   [ RunTime:0.0002s ]
+SQL: SELECT `user_name` FROM `db_user` WHERE `id` = 37 LIMIT 1   [ RunTime:0.0002s ]
+NOTIC: [2] Missing argument 1 for Think\Controller::show(), called in D:\program\lawyer\Application\Admin\Controller\Answer\AnswerController.class.php on line 33 and defined D:\program\lawyer\TPCore\Library\Think\Controller.class.php 第 68 行.
+NOTIC: [8] Undefined variable: content D:\program\lawyer\TPCore\Library\Think\Controller.class.php 第 69 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000070s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000117s ]
+NOTIC: [8] Undefined variable: keyword D:\program\lawyer\Application\Runtime\Cache\Admin\8b8be436207878b4a6bb2a226ea4f81c.php 第 24 行.
+NOTIC: [8] Undefined index: lawyer D:\program\lawyer\Application\Runtime\Cache\Admin\8b8be436207878b4a6bb2a226ea4f81c.php 第 31 行.
+NOTIC: [8] Undefined index: lawyer D:\program\lawyer\Application\Runtime\Cache\Admin\8b8be436207878b4a6bb2a226ea4f81c.php 第 31 行.
+NOTIC: [8] Undefined index: lawyer D:\program\lawyer\Application\Runtime\Cache\Admin\8b8be436207878b4a6bb2a226ea4f81c.php 第 31 行.
+NOTIC: [8] Undefined index: lawyer D:\program\lawyer\Application\Runtime\Cache\Admin\8b8be436207878b4a6bb2a226ea4f81c.php 第 31 行.
+NOTIC: [8] Undefined index: lawyer D:\program\lawyer\Application\Runtime\Cache\Admin\8b8be436207878b4a6bb2a226ea4f81c.php 第 31 行.
+NOTIC: [8] Undefined index: lawyer D:\program\lawyer\Application\Runtime\Cache\Admin\8b8be436207878b4a6bb2a226ea4f81c.php 第 31 行.
+NOTIC: [8] Undefined index: lawyer D:\program\lawyer\Application\Runtime\Cache\Admin\8b8be436207878b4a6bb2a226ea4f81c.php 第 31 行.
+NOTIC: [8] Undefined index: lawyer D:\program\lawyer\Application\Runtime\Cache\Admin\8b8be436207878b4a6bb2a226ea4f81c.php 第 31 行.
+NOTIC: [8] Undefined index: lawyer D:\program\lawyer\Application\Runtime\Cache\Admin\8b8be436207878b4a6bb2a226ea4f81c.php 第 31 行.
+NOTIC: [8] Undefined index: price D:\program\lawyer\Application\Runtime\Cache\Admin\8b8be436207878b4a6bb2a226ea4f81c.php 第 38 行.
+NOTIC: [8] Undefined index: price D:\program\lawyer\Application\Runtime\Cache\Admin\8b8be436207878b4a6bb2a226ea4f81c.php 第 38 行.
+NOTIC: [8] Undefined index: price D:\program\lawyer\Application\Runtime\Cache\Admin\8b8be436207878b4a6bb2a226ea4f81c.php 第 38 行.
+NOTIC: [8] Undefined index: price D:\program\lawyer\Application\Runtime\Cache\Admin\8b8be436207878b4a6bb2a226ea4f81c.php 第 38 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.012637s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.012682s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000595s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000641s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000855s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000904s ]
+
+[ 2018-11-15T14:28:40+08:00 ] 127.0.0.1 /index.php/Admin/Answer/Answer/voice_list/id/2.html?id=2&type=1
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000014s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000452s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000875s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000931s ]
+SQL: SHOW COLUMNS FROM `db_manager` [ RunTime:0.0098s ]
+SQL: SELECT resource.id as id,resource.moudle as m,resource.action as action,resource.method as method FROM db_manager manager,db_manager_role mrole,db_role_resource r_resource,db_resource resource WHERE ( manager.id=1 and manager.id = mrole.manager_id and mrole.role_id = r_resource.role_id and resource.id = r_resource.resource_id ) ORDER BY resource.id desc  [ RunTime:0.0013s ]
+SQL: SHOW COLUMNS FROM `db_answer` [ RunTime:0.0091s ]
+SQL: SELECT `content` FROM `db_answer` WHERE `id` = 2 LIMIT 1   [ RunTime:0.0009s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000075s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000146s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.012210s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.012285s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000773s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000827s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000880s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000953s ]
+

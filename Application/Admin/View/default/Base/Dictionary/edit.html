@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title></title>
+        <meta name="keywords" content="">
+        <meta name="description" content="">
+        <link href="__PUBLIC__/hplus/css/bootstrap.min.css?v={:C('SYSTEM_VER')}" rel="stylesheet">
+        <link href="__PUBLIC__/hplus/css/font-awesome.min.css?v={:C('SYSTEM_VER')}" rel="stylesheet">
+        <link href="__PUBLIC__/hplus/css/animate.min.css?v={:C('SYSTEM_VER')}" rel="stylesheet">
+        <link href="__PUBLIC__/hplus/css/style.min.css?v={:C('SYSTEM_VER')}" rel="stylesheet"> 
+        <link href="__PUBLIC__/hplus/css/osdefine.css?v={:C('SYSTEM_VER')}" rel="stylesheet">
+        <link href="__PUBLIC__/hplus/css/blueimp-gallery.min.css?v={:C('SYSTEM_VER')}" rel="stylesheet">
+        <link href="__PUBLIC__/hplus/js/icheck/custom.css" rel="stylesheet">
+        <style>
+        .lightBoxGallery img {
+            margin: 5px;
+            width: 160px;
+        }
+        </style>
+    </head>
+    <body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <!--<div class="ibox-title">
+                        <h5>查看项目</h5>
+                        <div class="ibox-tools">
+                        </div>
+                    </div>!-->
+                    <div class="ibox-content">
+                        <form method="post" id='submitForm' name='submitForm' class="form-horizontal">
+                        <div class="tabs-container">
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true">基本信息</a></li>
+                            </ul>
+                            <div class="tab-content" id="myTabContent">
+                                
+                                <div id="tab-1" class="tab-pane active">
+                                    <div class="panel-body">
+                                       
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">上级分类</label>
+                                            <div class="col-sm-10">
+                                                <select id="cat_id" name="cat_id" class="form-control" <neq name="entity.id" value="0">disabled=""</neq>>
+                                                    <foreach name="catlist" item="vo" >  
+                                                        <option value="{$vo.id}"  <eq name="vo.id" value="$entity.pid">selected</eq>>{$vo.name2}</option>
+                                                    </foreach>
+                                                </select>
+                                                <span class="help-block m-b-none"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">分类名称</label>
+                                            <div class="col-sm-10">
+                                                <input type="hidden" name="id" id="id" value="{$entity.id}"/>
+                                                <input class="form-control" type="text" id="name" name="name"  value="{$entity.name}" placeholder="">
+                                                <span class="help-block m-b-none"></span>
+                                            </div>
+                                        </div>  
+                                       
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">排序ID</label>
+                                            <div class="col-sm-10">
+                                                <input class="form-control" type="text" id="listorder" name="listorder"  value="{$entity.listorder}" placeholder="">
+                                                <span class="help-block m-b-none"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-10">
+                                                <input class="form-control" type="hidden" id="type" name="type"  value="{$type}" placeholder="">
+                                                <span class="help-block m-b-none"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                                
+                            </div>
+                        </div> 
+                        </form>
+                    </div>   
+                    <!--数据表单结束!-->
+                    <!--操作按钮开始!-->
+                    <div class="ibox-content">
+                        <div class="form-actions no-margin">
+                            <div class="next-prev-btn-container pull-right">
+                                <a href="javascript:void(0)" id="submitbutton" class="btn btn-primary radius">提交</a>
+                                <a href="javascript:void(0)"  id="cancelbutton" class="btn btn-default radius">关闭</a>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <!--操作按钮结束!-->
+                </div>
+            </div>
+        </div>
+    </div>
+        <!-- 全局js -->
+        <script src="__PUBLIC__/hplus/js/jquery-2.1.1.min.js"></script>
+        <script src="__PUBLIC__/hplus/js/bootstrap.min.js?v={:C('SYSTEM_VER')}"></script>
+        <script src="__PUBLIC__/hplus/js/layer/layer.min.js?v={:C('SYSTEM_VER')}"></script>
+        <script src="__PUBLIC__/hplus/js/laydate/laydate.js?v={:C('SYSTEM_VER')}"></script>
+        <script type="text/javascript" src="__PUBLIC__/hplus/js/jquery.blueimp-gallery.min.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/hplus/js/boot.js?v={:C('SYSTEM_VER')}"></script>
+        <script type="text/javascript" src="__PUBLIC__/hplus/js/switchery/switchery.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/hplus/js/icheck/icheck.min.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/hplus/js/uploadify/jquery.uploadify.min.js"></script>
+        <script src="__PUBLIC__/hplus/js/validate/jquery.validate.min.js"></script>
+        <script src="__PUBLIC__/hplus/js/validate/messages_zh.min.js"></script>
+        <script src="__PUBLIC__/hplus/js/form-validate-demo.min.js"></script>
+         <script type="text/javascript">
+            var e="<i class='fa fa-times-circle'></i> ";
+            $(document).ready(function () {
+                $(".i-checks").iCheck({checkboxClass:"icheckbox_square-green",radioClass:"iradio_square-green",});
+                $("#submitForm").validate({rules:{name:"required"}});
+                $("#cancelbutton").click(function () {
+                    parent.window.location.reload();
+                });
+                $('select[name=cat_id]').change(function(){
+                    changemoudle();
+                });
+                changemoudle();
+                $("#submitbutton").click(function () {
+                    if (validateForm()&&$("#submitForm").valid()) {
+                        function suc(data) {
+                            if (data.code == 1)
+                            {
+                                parent.layer.msg(data.msg, {icon:1,shadeClose: true,shade: 0.5,end:function(){$("#cancelbutton").click();}});
+                            } else {
+                                parent.layer.msg(data.msg, {icon:2,shadeClose: true,shade: 0.5,});
+                            }
+                        }
+                        function err(e,e2,e3) {
+                            parent.layer.msg('请求服务器失败', {icon:2,shadeClose: true,shade: 0.5,});
+                        }
+                        execute('/Admin/Base/Dictionary/edit.html', 1, $('#submitForm').serialize(), suc, err);                        
+                    }
+                });
+                setTimeout(function () {
+                    $('#thumbfile').uploadify({
+                        'formData': {
+                            'time': "{$authserialize.time}", 'user': "{$authserialize.user}", 'pagename': '{$authserialize.controller}', 'other': '{$authserialize.action}'
+                        },
+                        'swf': '__PUBLIC__/hplus/js/uploadify/uploadify.swf',
+                        'uploader': "/Admin/Base/Upload/uploadifythumb",
+                        'buttonImage': '__PUBLIC__/admin/img/uploadfile.png',
+                        'fileTypeExts': '*.png;*.jpg;*.gif',
+                        'fileSizeLimit': '2MB',
+                        'width': 95,
+                        'height': 34,
+                        'multi': false,
+                        'progressData': 'speed',
+                        'onUploadSuccess': function (file, data, response) {
+                            var r = eval('(' + data + ')');
+                            if (r.error == 0)
+                            {
+                                $('input[name="thumb"]').val(r.url);
+                            } else {
+                                parent.layer.msg(r.message, {icon: 2, shadeClose: true, shade: 0.5, });
+                            }
+                        },
+                        'onUploadError': function (file, errorCode, errorMsg, errorString) {
+                            parent.layer.msg(errorString, {icon: 2, shadeClose: true, shade: 0.5, });
+                        }
+                    });
+                }, 100);
+            });
+            /** 表单验证  **/
+            function validateForm() {
+                if($('#name').val()=='')
+                {
+                    parent.layer.msg('请输入分类名称', {icon:2,shadeClose: true,shade: 0.5,});
+                    return false;
+                }
+                return true;
+            }
+            function changemoudle()
+            {
+                if($('select[name=cat_id]').val()==0)
+                {
+                    $('select[name=moudle]').removeAttr('disabled');
+                }
+                else
+                {
+                    $('select[name=moudle]').attr('disabled','');
+                    $('select[name=moudle]').val($('select[name=cat_id]').find('option:selected').attr('m'));
+                }
+            }
+        </script>
+    </body>
+</html>

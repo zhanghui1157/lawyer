@@ -1,0 +1,81 @@
+<extend name="Public/lists"/>
+<block name="content">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>{$keyword}列表</h5>
+        </div>
+        <div class="ibox-content">
+            <form role="form" method="post" id="form1" class="form-inline" method="{:U('list')}">
+                <a class="btn radiu {:(empty($status))?'btn-primary':'btn-default'}" data-toggle="tab">全部</a>
+                <a class="btn radiu {:($status==1)?'btn-primary':'btn-default'}" data-toggle="tab" val="1">待审核</a>
+                <a class="btn radiu {:($status==2)?'btn-primary':'btn-default'}" data-toggle="tab" val='2'>通过</a>
+                <a class="btn radiu {:($status==3)?'btn-primary':'btn-default'}" data-toggle="tab" val='3'>驳回</a>
+                <input type="hidden" name="status" value="{$status}">
+                <input type="hidden" name="type" value="1">
+            </form>
+        </div>
+        <div class="ibox-content">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th width="100">真实姓名</th>
+                            <th width="100">头像</th>
+                            <th width="100">手机号码</th>
+                            <th width="100">认证状态</th>
+                            <th width="100">是否显示</th>
+                            <th width="100">详情</th>
+                            <th width="100">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <foreach name="list" item="vo" > 
+                        <tr>
+                            <td>{$vo.user_name}</td>
+                            <td><img src="{$vo.headimg}" style="width:50px;height:50px;border-radius:50%"></td>
+                            <td>{$vo.mobile}</td>
+                            <td>
+                                <if condition="$vo.status eq 1">
+                                    <a href="javascript:void(0)" address="{:U('check_status')}?id={$vo.id}"  tip="{$vo.user_name}的认证状态" onclick="winopen(this,'60%','50%');" class="ajaxsubmit">{$vo.txt_status}</a> 
+                                <elseif condition="$status eq 2"/>
+                                    {$vo.txt_status}
+                                <else/>
+                                    {$vo.txt_status}
+                                </if>
+                                
+                            </td>
+                            <td>
+                                <if condition="$vo.is_show eq 1">
+                                    <a href="{:U('showLaywer',array('id'=>$vo['id']))}"  tip="确定要不显示{$vo.user_name}吗" class="ajaxsubmit ajaxdo">显示</a> 
+                                <else/>
+                                    <a href="{:U('showLaywer',array('id'=>$vo['id']))}"  tip="确定要显示{$vo.user_name}吗" class="ajaxsubmit ajaxdo">不显示</a> 
+                                </if>
+                            </td>
+                            <td>
+                                <a href="javascript:void(0)" address="{:U('check_info')}?id={$vo.id}"  tip="{$vo.user_name}的详情" onclick="winopen(this);" class="ajaxsubmit">查看详情</a> 
+                            </td>
+                            <td>
+                                <a href="{:U('del',array('id'=>$vo['id']))}" tip="请确定要删除此{$keywords}吗?" class="ajaxsubmit ajaxdo">删除</a>
+                            </td>
+                        </tr>
+                    </foreach>
+                    </tbody>
+                </table>
+            </div>
+            <div class="text-center">
+                共计：{$count}条&nbsp;&nbsp;{$page}
+            </div>
+        </div>
+    </div>
+</block>
+<block name="script">      
+    <script type="text/javascript">
+        $(document).ready(function () {    
+            $('form a').click(function(){
+                var status=$(this).attr('val');
+                $('input[name=status]').val(status);
+                $("#form1").submit();
+            });
+        });
+    </script>
+</block>  

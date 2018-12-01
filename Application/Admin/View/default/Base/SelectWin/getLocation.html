@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title></title>
+        <meta name="keywords" content="">
+        <meta name="description" content="">
+        <link href="__PUBLIC__/hplus/css/bootstrap.min.css?v={:C('SYSTEM_VER')}" rel="stylesheet">
+        <link href="__PUBLIC__/hplus/css/font-awesome.min.css?v={:C('SYSTEM_VER')}" rel="stylesheet">
+        <link href="__PUBLIC__/hplus/css/animate.min.css?v={:C('SYSTEM_VER')}" rel="stylesheet">
+        <link href="__PUBLIC__/hplus/css/style.min.css?v={:C('SYSTEM_VER')}" rel="stylesheet"> 
+        <style type="text/css">
+        *{
+            margin:0px;
+            padding:0px;
+        }
+        body, button, input, select, textarea {
+            font: 12px/16px Verdana, Helvetica, Arial, sans-serif;
+        }
+        p{
+            width:480px;
+            padding-top:3px;
+            overflow:hidden;
+        }
+        #container {
+           min-width:480px;
+           min-height:767px;
+        }
+        </style>
+    </head>
+    <body class="gray-bg">
+        <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <form role="form" class="form-inline" method="get">
+                            <div class="form-group">
+                                <input name="lat" type="text" placeholder="经度" id="lat" value="{$search.lat}" class="form-control">
+                            </div>  
+                            <div class="form-group">
+                                <input name="lng" type="text" placeholder="纬度" id="lng" value="{$search.lng}" class="form-control">
+                            </div> 
+                            <button class="btn btn-primary" type="button" id='_submit'>确定</button>
+                        </form>
+                    </div>                    
+                    <div class="ibox-content" id="container">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <!-- 全局js -->
+        <script src="__PUBLIC__/hplus/js/jquery-2.1.1.min.js"></script>
+        <script src="__PUBLIC__/hplus/js/bootstrap.min.js?v={:C('SYSTEM_VER')}"></script>
+        <script src="__PUBLIC__/hplus/js/layer/layer.min.js?v={:C('SYSTEM_VER')}"></script>
+        <script type="text/javascript" src="__PUBLIC__/hplus/js/boot.js?v={:C('SYSTEM_VER')}"></script>
+        <script charset="utf-8" src="http://map.qq.com/api/js?v=2.exp"></script>
+        <script>
+        var init = function() {
+            var map = new qq.maps.Map(document.getElementById("container"),{
+                center: new qq.maps.LatLng($('input[name=lat]').val(),$('input[name=lng]').val()),
+                zoom: 13
+            });
+            //添加监听事件
+            qq.maps.event.addListener(map, 'click', function(e) {
+                $('input[name=lat]').val(e.latLng.getLat().toFixed(6));
+                $('input[name=lng]').val(e.latLng.getLng().toFixed(6));
+            });
+        };
+        $(function(){
+            $('#_submit').click(function(){
+                parent.setlocation($('input[name=lat]').val(),$('input[name=lng]').val());
+                parent.layer.closeAll();
+                return false;
+            });
+            init();
+        });
+        </script>
+    </body>
+</html>

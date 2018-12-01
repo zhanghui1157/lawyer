@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title></title>
+        <meta name="keywords" content="">
+        <meta name="description" content="">
+        <link href="__PUBLIC__/hplus/css/bootstrap.min.css?v={:C('SYSTEM_VER')}" rel="stylesheet">
+        <link href="__PUBLIC__/hplus/css/font-awesome.min.css?v={:C('SYSTEM_VER')}" rel="stylesheet">
+        <link href="__PUBLIC__/hplus/css/animate.min.css?v={:C('SYSTEM_VER')}" rel="stylesheet">
+        <link href="__PUBLIC__/hplus/css/style.min.css?v={:C('SYSTEM_VER')}" rel="stylesheet"> 
+        <link href="__PUBLIC__/hplus/css/osdefine.css?v={:C('SYSTEM_VER')}" rel="stylesheet">
+    </head>
+    <body class="gray-bg">
+        <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>管理员操作日志</h5>
+                        <div class="ibox-tools">
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <form role="form" class="form-inline" method="get">
+                            <div class="form-group">
+                                <label for="adminname" class="sr-only">操作人员</label>
+                                <input name="adminname" type="text" placeholder="操作人员" id="adminname" value="{$search.adminname}" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">日期范围：</label>
+                                <div class="col-sm-10">
+                                    <input placeholder="开始日期" class="form-control layer-date"  id="start" name="startdate" value="{$search.startdate}">
+                                    <input placeholder="结束日期" class="form-control layer-date" id="end" name="enddate" value="{$search.enddate}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" placeholder="IP地址" id="ip" name="ip" value="{$search.ip}" class="form-control">
+                            </div>
+                            <button class="btn btn-primary" type="submit">搜索</button>
+                        </form>
+                    </div>
+                    
+                    <div class="ibox-content">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th width="100">日志编号</th>
+                                <th>日志内容</th>
+                                <th width="120">IP地址</th>
+                                <th width="200">操作时间</th>
+                                <th width="100">操作人</th>
+                                <th width="120">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <foreach name="list" item="vo" > 
+                                <tr>
+                                    <td>{$vo.id}</td>
+                                    <td>{$vo.loginfo}</td>
+                                    <td>{$vo.ip}</td>
+                                    <td>{$vo.addtime|date='Y-m-d h:i:s',###}</td>
+                                    <td>{$vo.managername}</td>
+                                    <td>
+                                            <!--<a href="javascript:del('{$vo.id}');">删除</a>-->
+                                    </td>
+                                </tr>
+                            </foreach>
+                            </tbody>
+                        </table>
+                        </div>
+                        
+                        <div class="text-center">
+                            {$page}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <!-- 全局js -->
+        <script src="__PUBLIC__/hplus/js/jquery-2.1.1.min.js"></script>
+        <script src="__PUBLIC__/hplus/js/bootstrap.min.js?v={:C('SYSTEM_VER')}"></script>
+        <script src="__PUBLIC__/hplus/js/layer/layer.min.js?v={:C('SYSTEM_VER')}"></script>
+        <script src="__PUBLIC__/hplus/js/laydate/laydate.js?v={:C('SYSTEM_VER')}"></script>
+        <script type="text/javascript" src="__PUBLIC__/hplus/js/boot.js?v={:C('SYSTEM_VER')}"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                var start={elem:"#start",format:"YYYY-MM-DD",min:"1999-01-01",max:laydate.now(),istime:true,istoday:false,choose:function(a){end.min=a;end.start=a}};var end={elem:"#end",format:"YYYY-MM-DD",min:"1999-01-01",max:laydate.now(),istime:true,istoday:false,choose:function(a){start.max=a}};laydate.skin('default');laydate(start);laydate(end);
+            });
+        </script>
+    </body>
+</html>

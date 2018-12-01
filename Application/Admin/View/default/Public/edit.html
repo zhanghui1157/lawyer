@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <block name='title'><title></title></block>
+        <meta name="keywords" content="">
+        <meta name="description" content="">
+        <link href="__PUBLIC__/hplus/css/bootstrap.min.css?v={:C('SYSTEM_VER')}" rel="stylesheet">
+        <link href="__PUBLIC__/hplus/css/font-awesome.min.css?v={:C('SYSTEM_VER')}" rel="stylesheet">
+        <link href="__PUBLIC__/hplus/css/animate.min.css?v={:C('SYSTEM_VER')}" rel="stylesheet">
+        <link href="__PUBLIC__/hplus/css/style.min.css?v={:C('SYSTEM_VER')}" rel="stylesheet"> 
+        <link href="__PUBLIC__/hplus/css/osdefine.css?v={:C('SYSTEM_VER')}" rel="stylesheet">
+        <link href="__PUBLIC__/hplus/css/blueimp-gallery.min.css?v={:C('SYSTEM_VER')}" rel="stylesheet">
+        <link href="__PUBLIC__/hplus/js/icheck/custom.css" rel="stylesheet">
+        <link href="__PUBLIC__/plug/kindeditor/themes/default/default.css" rel="stylesheet" type="text/css" media="all"/>
+        <!-- <link href="__PUBLIC__/hplus/css/combo.select.css" rel="stylesheet"> -->
+        <block name="link"></block>
+        <block name="style"><style></style></block>
+    </head>
+    <body class="gray-bg">
+    
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="ibox float-e-margins">
+                        <block name="content"></block>
+                        <!--操作按钮结束!-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </block>
+        <!-- 全局js -->
+
+        <script src="__PUBLIC__/hplus/js/jquery-2.1.1.min.js"></script>
+        <script src="__PUBLIC__/hplus/js/bootstrap.min.js?v={:C('SYSTEM_VER')}"></script>
+        <script src="__PUBLIC__/hplus/js/layer/layer.min.js?v={:C('SYSTEM_VER')}"></script>
+        <script src="__PUBLIC__/hplus/js/laydate/laydate.js?v={:C('SYSTEM_VER')}"></script>
+        <script type="text/javascript" src="__PUBLIC__/hplus/js/H-ui.js"></script> 
+        <script type="text/javascript" src="__PUBLIC__/hplus/js/icheck/icheck.min.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/hplus/js/jquery.blueimp-gallery.min.js"></script>
+        <script type="text/javascript" charset="utf-8" src="__PUBLIC__/hplus/js/ueditor/ueditor.config.js"></script>
+        <script type="text/javascript" charset="utf-8" src="__PUBLIC__/hplus/js/ueditor/ueditor.all.min.js"> </script>
+        <script type="text/javascript" charset="utf-8" src="__PUBLIC__/hplus/js/ueditor/lang/zh-cn/zh-cn.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/hplus/js/uploadify/jquery.uploadify.min.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/hplus/js/boot.js?v={:C('SYSTEM_VER')}"></script>
+        <script type="text/javascript" src="__PUBLIC__/hplus/js/areas.js?v={:C('SYSTEM_VER')}"></script>
+        <script type="text/javascript" src="__PUBLIC__/hplus/js/formSubmit.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/plug/layui/layui.js"></script>
+        <script src="__PUBLIC__/hplus/js/jquery.combo.select.js"></script>
+        <script charset="utf-8" src="__PUBLIC__/plug/kindeditor/kindeditor-min.js"></script>
+        <script charset="utf-8" src="__PUBLIC__/plug/kindeditor/lang/zh_CN.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                // $('select').comboSelect();
+                $(".i-checks").iCheck({checkboxClass:"icheckbox_square-green",radioClass:"iradio_square-green",});
+                $("#cancelbutton").click(function () {
+                    parent.window.location.reload();
+                });
+              
+            });
+        </script>
+        <block name="script"></block>
+<block name="footer">
+    </body>
+</html>
+</block>            
